@@ -1,0 +1,10 @@
+<div class="cube-portfolio container content-sm">
+  <div id="grid-container" class="cbp-l-grid-agency">
+
+    <% rs.each do |product| %>
+      <%= show_product(product) %>
+    <% end %>
+  </div>
+</div>
+
+<%= paginate rs %>

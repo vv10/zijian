@@ -1,0 +1,57 @@
+<div class="panel panel-sea margin-bottom-40">
+    <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-gear"></i> 统计开票信息</h3>
+    </div>
+    <div class="panel-body">
+        <%= search_form_for @q, url: invoice_info_kobe_tongji_index_path, html: { method: :get } do |f| %>
+          <div class="margin-bottom-10">
+            <div class="input-group">
+              <%= f.search_field :name_cont, class: "form-control input-sm", placeholder: "请输入单位名称..." %>
+              <span class="input-group-btn">
+                <button class="btn btn-success btn-sm" type="submit">搜索</button>
+              </span>
+            </div>
+          </div>
+        <% end %>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>单位ID</th>
+                    <th>单位名称（全称）</th>
+                    <th>纳税人识别号</th>
+                    <th>注册详细地址</th>
+                    <th>注册电话</th>
+                    <th>开户银行</th>
+                    <th>开户银行账号</th>
+                    <th>营业执照号</th>
+                    <th>电子邮箱</th>
+                    <th>手机</th>
+                    <th>增票收票人姓名</th>
+                    <th>增票收票人电话</th>
+                    <th>增票收票人详细地址</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @rs.present? && @rs.each_with_index do |r, index|%>
+                <tr>
+                    <td align="center"><%= show_index(index) %></td>
+                    <td><%= r.department_id %></td>
+                    <td><%= r.name %></td>
+                    <td><%= r.tax %></td>
+                    <td><%= r.address %></td>
+                    <td><%= r.tel %></td>
+                    <td><%= r.bank %></td>
+                    <td><%= r.bank_account %></td>
+                    <td><%= r.license %></td>
+                    <td><%= r.email %></td>
+                    <td><%= r.mobile %></td>
+                    <td><%= r.user_name %></td>
+                    <td><%= r.user_tel %></td>
+                    <td><%= r.user_addr %></td>
+                </tr>
+                <%end%>
+            </tbody>
+        </table>
+    </div>
+</div>

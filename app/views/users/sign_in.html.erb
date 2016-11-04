@@ -1,0 +1,139 @@
+<!-- <div class="container content">    -->
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 shadow-wrapper">
+      <div class="box-shadow shadow-effect-2 mt80 opacity-80 ">
+
+        <%= form_for(User.new, url: login_users_path, method: :post, html: { class: "sky-form reg-page", id: "sign_in_form" }) do |u| %>
+          <header class='margin-top-10'><span class="icon-user" aria-hidden="true"></span> 用户登录</header>
+          <%= hidden_field_tag "mall_type", params[:mall_type] %>
+          <fieldset>
+            <section>
+              <div class="row">
+                <label class="label col col-3">用户名</label>
+                <div class="col col-8">
+                  <label class="input">
+                    <i class="icon-append fa fa-user"></i>
+                    <%= u.text_field :login, placeholder: "用户名" %>
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <div class="row">
+                <label class="label col col-3">密 码</label>
+                <div class="col col-8">
+                  <label class="input">
+                    <i class="icon-append fa fa-lock"></i>
+                    <%= u.password_field :password, placeholder: "密 码" %>
+                  </label>
+                  <div class="note"><%#= link_to "忘记密码?", forgot_password_users_path %></div>
+                </div>
+              </div>
+            </section>
+
+            <% if session[:wrong_pwd]  %>
+              <section>
+                <div class="row">
+                  <label class="label col col-3">验证码</label>
+                  <div class="col col-5">
+                    <label class="input"><%= rucaptcha_input_tag(class: 'form-control', placeholder: '验证码') %></label>
+                  </div>
+                  <div class="col col-4"><%= rucaptcha_image_tag(alt: '验证码') %></div>
+
+                </div>
+
+              </section>
+            <% end %>
+         <!--    <div id="captcha_div" style="display: none;">
+              <section>
+                <div class="row">
+                  <label class="label col col-4">验证码</label>
+                  <div class="col col-8">
+                    <label class="input input-captcha">
+                      <%#= captcha_tag %>
+                      <input id='user_captcha' name='user[captcha]' type='text' placeholder="验证码">
+                    </label>
+                  </div>
+                </div>
+              </section>
+            </div>
+           -->
+
+            <section>
+              <div class="row">
+                <div class="col col-4"></div>
+                <div class="col col-8">
+                  <label class="checkbox">
+                    <input id='user_remember_me' name='user[remember_me]' type='checkbox' value='1'><i></i> 自动登录?
+                  </label>
+                </div>
+              </div>
+            </section>
+          </fieldset>
+
+          <div class="content-xs border-top-1 textc">
+            <%#= link_to "注 册", sign_up_users_path, class: "btn-u btn-u-default" %>
+            <button type="submit" class="btn-u margin-left-20" id="sign_in_form_submit">登 录</button>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // 表单提交 登录按钮变登录中
+    $("#sign_in_form").on('submit',function(){
+      $("#sign_in_form_submit").text("登录中...");
+      $("#sign_in_form_submit").addClass("btn-u-default");
+    });
+
+    // 有没通过验证的input 登录按钮由登录中变成登录
+    $("body").on("blur", "#sign_in_form input.invalid", function(){
+      $("#sign_in_form_submit").text("登 录");
+      $("#sign_in_form_submit").removeClass("btn-u-default");
+    });
+
+    var sign_in_rules = {
+      "user[login]": { required: true },
+      "user[password]": { required: true }//,
+      // "user[captcha]": { required: true, minlength: 6, remote: { url: '/users/valid_captcha', type: 'post', async: false } }
+    };
+    // var sign_in_msg = {
+    //   "user[password]": { remote: "用户名或者密码错误" },
+    //   "user[captcha]": { remote: "验证码输入错误" }
+    // };
+    validate_form_rules('#sign_in_form', sign_in_rules);
+
+  // 验证码看不清 点击刷新
+  // $("img[alt='captcha']").each(function(index, item){
+  //   item.title = '看不清？点击刷新';
+  //   $(this).css("cursor", "pointer");
+  // });
+  // $("img[alt='captcha']").on("click", function(){
+  //   // captcha_refresh();
+  // });
+
+  // 绑定form的input 1.如果用户名密码输入错误显示验证码 2.如果验证码输入错误自动刷新验证码
+  // $('body').on("focus blur","#sign_in_form input",function(){
+  //   if($(this).hasClass("invalid")) {
+  //     switch (this.id){
+  //       case 'user_password': $("#captcha_div").css("display", "block");captcha_refresh();break;
+  //       case 'user_captcha': captcha_refresh();break;
+  //       default: break;
+  //     }
+  //   }
+  // });
+});
+
+// 验证码自动刷新
+// function captcha_refresh () {
+  // var img = $("img[alt='captcha']")[0];
+  // img.src = img.src + '?';
+  // $("#user_captcha").val("");
+// }
+
+</script>

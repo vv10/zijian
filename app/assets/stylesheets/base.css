@@ -1,0 +1,19 @@
+/*
+ *
+ *= require plugins/bootstrap.min
+ *= require blocks
+ *= require plugins
+ *= require app
+ *= require plugins/style-switcher
+ *= require style
+ *= require headers/header-default
+ *= require footers/footer-v1
+ *= require plugins/animate
+ *= require plugins/line-icons
+ *= require plugins/font-awesome/font-awesome.min
+ *= require default
+ *= require custom
+ *
+ *= require_self
+ *
+ */

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <title><%= yield(:title).presence || Dictionary.web_site_name %></title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="<%= Dictionary.web_site_key_words %>">
+    <meta name="description" content="<%= Dictionary.web_site_description %>">
+    <meta name="author" content="<%= Dictionary.web_site_author %>">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+    <!-- CSS Global Compulsory -->
+    <%= stylesheet_link_tag "james" %>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <!--=== Header ===-->
+    <%#= render :partial => '/shared/layout/james_header' %>
+    <!--=== End Header ===-->
+
+    <!--=== Content Part ===-->
+        <%= yield %>
+    <!--/container-->
+    <!--=== End Content Part ===-->
+
+    <!--=== Copyright ===-->
+    <%= render :partial => '/shared/layout/james_footer' %>
+    <!--=== End Copyright ===-->
+</div><!--/End Wrapepr-->
+
+<%= javascript_include_tag "james" %>
+
+<!--[if lt IE 9]>
+    <%= javascript_include_tag "ie_9" %>
+<![endif]-->
+<%= render partial: '/shared/dialog/art_dialog' %>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<%if params[:search_btn].blank?%>
+<div class="tab-content">
+  <div class="tab-pane fade in active" id="home-1">
+    <%= form_tag  order_details_kobe_tongji_index_path , method: "get" , id: 'sky-form' , class: "sky-form" do %>
+    <header><i class="fa fa-cloud-download"></i> 导出订单</header>
+    <fieldset>
+      <div class="row">
+        <section class="col col-4">
+          <label class="label">开始时间</label>
+          <label class="input">
+            <i class="icon-append fa fa-calendar"></i>
+            <input type="text" name="begin" class="start_date"  placeholder="开始日期" value="<%= params[:begin] %>">
+          </label>
+        </section>
+        <section class="col col-4">
+          <label class="label">截止时间</label>
+          <label class="input">
+            <i class="icon-append fa fa-calendar"></i>
+            <input type="text" name="end" class='finish_date'  placeholder="结束日期" value="<%= params[:end] %>">
+          </label>
+        </section>
+        <section class="col col-4">
+          <label class="label">选择导出Excel的表头</label>
+          <label class="input">
+            <i class="icon-append fa fa-chevron-down"></i>
+            <input type="text"  name="table_name" id="table_name"  class="tree_checkbox required" json_url="/kobe/tongji/get_table_name_json" partner='tbn'>
+          </label>
+        </section>
+      </div>
+      <div class="row">
+        <section class="col col-4">
+          <label class="label">供应商单位</label>
+          <label class="input">
+            <i class="icon-append fa fa-chevron-down"></i>
+            <input type="text"  name="dep_s_name" id="dep_s_name">
+          </label>
+        </section>
+        <section class="col col-4">
+          <label class="label">采购方式</label>
+          <label class="input">
+            <i class="icon-append fa fa-chevron-down"></i>
+            <input type="text"  name="yw_type_name" id="yw_type_name"  class="tree_checkbox required" json_url="/kobe/shared/get_yw_type_json" partner='yw_type'>
+          </label>
+        </section>
+        <section class="col col-4">
+          <label class="label">采购品目</label>
+          <label class="input">
+            <i class="icon-append fa fa-chevron-down"></i>
+            <input type="text"  name="category_name" id="category_name"  class="tree_radio required" json_url="/kobe/shared/category_ztree_json" partner='category_id'>
+          </label>
+        </section>
+      </div>
+      <div class="row">
+        <section class="col col-4">
+          <label class="label">采购单位</label>
+          <div class="inline-group">
+            <label class="radio"><input type="radio" value="only" name="dep" id="dep" checked=""><i class="rounded-x"></i>本单位</label>
+            <label class="radio"><input type="radio" value="all" name="dep" id="dep"><i class="rounded-x"></i>辖区内所有单位</label>
+          </div>
+        </section>
+        <section class="col col-4">
+          <label class="label">订单状态</label>
+          <div class="inline-group">
+            <label class="radio"><input type="radio" value="effective_status" name="order_status" id="order_status" checked=""><i class="rounded-x"></i>有效订单</label>
+            <label class="radio"><input type="radio" value="all" name="order_status" id="order_status"><i class="rounded-x"></i>全部订单</label>
+          </div>
+        </section>
+      </div>
+      <input type="hidden" name="category_id" id="category_id">
+      <input type="hidden" name="yw_type" id="yw_type">
+      <input type="hidden" name="ot" id="ot">
+      <input type="hidden" name="tbn" id="tbn">
+    </fieldset>
+    <footer class="tc">
+      <input type="submit" name="search_btn" class="btn-u btn-u-blue" value="查询">
+    </footer>
+  </div>
+  <%end%>
+</div>
+
+<%else%>
+  <div class="panel panel-sea margin-bottom-40">
+    <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-gear"></i> 导出订单</h3>
+    </div>
+    <div class="panel-body">
+      <div class="panel-title margin-bottom-10">
+          <%= content_tag(:div, "订单日期：#{params[:begin]} 至 #{params[:end]}") if params[:begin].present? %>
+          <%= content_tag(:div, "采购品目：#{params[:category_name]}") if params[:category_name].present? %>
+          <%= content_tag(:div, "供应商名称：#{params[:dep_s_name]}") if params[:dep_s_name].present? %>
+          <%= content_tag(:div, "采购方式：#{params[:yw_type_name]}") if params[:yw_type_name].present? %>
+          <%= content_tag(:div, "采购单位：#{params[:dep] == "all" ? "辖区内所有单位" : "本单位"}") %>
+          <%= content_tag(:div, "订单状态：#{params[:order_status] == "all" ? "全部订单" : "有效订单"}") %>
+          <%
+            pp = params.clone
+            pp[:format] = 'xls'
+          %>
+          <%= content_tag(:div, link_to('<i class="fa fa-file-excel-o"></i> 导出Excel'.html_safe, export_kobe_tongji_index_path(pp), class: 'btn-u btn-u-blue'), class: 'margin-top-10 fr margin-bottom-10') %>
+      </div>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <% @excel_table_name.each do |e| %>
+            <th><%= Dictionary.excel_table_name[e]["name"] %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rs.present? && @rs.each_with_index do |r, index|%>
+          <tr>
+            <td align="center"><%= show_index(index) %></td>
+            <% @excel_table_name.each do |e| %>
+            <%= content_tag :td, (Dictionary.excel_table_name[e]["to_cn"].present? ? eval(Dictionary.excel_table_name[e]["to_cn"].gsub("##to_cn##", "#{eval("r.#{e}")}")) : eval("r.#{e}")), class: Dictionary.excel_table_name[e]["class"] %>
+            <% end %>
+          </tr>
+          <%end%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<%end%>

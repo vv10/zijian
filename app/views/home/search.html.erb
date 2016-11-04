@@ -1,0 +1,4 @@
+<%= render partial: "header", locals: { breadcrumbs_left: "搜索“#{params[:k]}”结果", breadcrumbs_right: breadcrumbs_li("返回首页" => root_path) } %>
+
+<%= render partial: "result", locals: { rs: @products.results } %>
+

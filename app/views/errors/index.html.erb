@@ -1,0 +1,9 @@
+<div class="title">出错了！错误代码：<%= @no %></div>
+<div class="content">
+<%= @messages.html_safe %>
+<%= link_to '返回首页', root_path unless @no == "707" %>
+</div>
+
+
+
+

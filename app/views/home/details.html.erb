@@ -1,0 +1,41 @@
+<%= render partial: "header", locals: { breadcrumbs_left: @product.title, breadcrumbs_right: breadcrumbs_li("首页" => root_path, @product.category.name => channel_path(@product.category.id), @product.ptype => "active") } %>
+
+<div class="container">
+  <div class="content">
+    <!-- Magazine Slider -->
+    <div class="carousel slide carousel-v2 margin-bottom-40" id="portfolio-carousel">
+
+      <div class="carousel-inner">
+        <div class="item active">
+          <%= image_tag @product.picture.upload.url(:lg), class: "full-width img-responsive" %>
+        </div>
+      </div>
+
+    </div>
+    <!-- End Magazine Slider -->
+
+    <div class="row margin-bottom-60">
+      <div class="col-sm-8">
+        <div class="headline"><h2>作品描述</h2></div>
+        <p><%= @product.summary %></p>
+      </div>
+      <div class="col-sm-4">
+        <div class="headline"><h2>基本参数</h2></div>
+        <ul class="list-unstyled project-details">
+          <%= get_details_params(@product) %>
+        </ul>
+      </div>
+    </div>
+
+    <% if @ps.present? %>
+    <div class="cube-portfolio">
+      <div class="headline"><h2>相似作品</h2></div>
+        <div id="grid-container" class="cbp-l-grid-agency">
+          <% @ps.each do |p| %>
+          <%= show_product(p) %>
+          <% end %>
+        </div>
+    </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <title><%= yield(:title).presence || Dictionary.web_site_name %></title>
+
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="中储粮服务网 中储粮 集中采购 电子采购 网上商城 粮油机械">
+  <meta name="description" content="中储粮总公司唯一指定的物资集中采购平台。">
+  <meta name="author" content="zcl">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="shortcut icon" href="/favicon.ico">
+  <%= stylesheet_link_tag "errors" %>
+  <%= javascript_include_tag "errors" %>
+</head>
+
+<body>
+
+<div id="container">
+  <div class="error-v1">
+    <%= yield %>
+    <span id="browserInfo" class="tips"></span>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+
+    var browser_vesion = "未知";
+    if($.browser.safari){
+      browser_vesion = "safari";
+    }
+    if($.browser.msie&&$.browser.version>9){
+      browser_vesion = "IE";
+    }
+    if($.browser.mozilla&&$.browser.version>='1.8'){
+      browser_vesion = "火狐";
+    }
+    if($.browser.chrome){
+      browser_vesion = "谷歌";
+    }
+
+    $("#browserInfo").html("当前浏览器： " + browser_vesion + "[版本:" + String($.browser.version) + "]");
+  });
+</script>
+</body>
+</html>

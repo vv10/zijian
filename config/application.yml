@@ -1,0 +1,170 @@
+# -*- encoding : utf-8 -*-
+defaults: &defaults
+  image_types: ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/x-png', 'image/pjpeg']
+  encodes: ["UTF-8", "GBK"]
+  web_site_name: "子建文化"
+  web_site_domain: "http://www.zijianwenhua.com.cn"
+  web_site_founded_year: 2016
+  web_site_key_words: "书画 书法 绘画 子建文化"
+  web_site_description: "书画 书法 绘画 子建文化"
+  web_site_author: "小俩工作室"
+  company_name: "小俩工作室"
+  company_short_name: "小俩工作室"
+
+  # 颜色样式
+  colors: [["u", "草绿"],["blue", "浅蓝"],["red", "红色"],["yellow", "黄色"],["purple", "紫色"],["orange", "橙色"],["green", "绿色"],["sea", "蓝绿色"],["aqua", "浅蓝色"],["brown", "棕色"],["dark-blue", "深蓝色"],["light-green", "浅绿"],["dark", "黑色"],["light", "灰色"]]
+  yes_or_no: [[1, "是"], [0, "否"]]
+  icons:
+    "详细": "fa-search-plus"
+    "录入": "fa-pencil-square-o"
+    "填写": "fa-pencil"
+    "修改": "fa-wrench"
+    "审核": "fa-gavel"
+    "授权": "fa-unlock"
+    "确认": "fa-check-square-o"
+    "退回": "fa-times"
+    "评价": "fa-thumbs-o-up"
+    "删除": "fa-trash-o"
+    "移动": "fa-arrows-v"
+    "邮件": "fa-envelope"
+    "提交": "fa-paper-plane-o"
+    "下单": "fa-shopping-cart"
+    "打印": "fa-print"
+    "上传": "fa-paperclip"
+    "未读": "fa-eye-slash"
+    "已读": "fa-eye"
+    "标记": "fa-flag"
+    "增加": "fa-plus"
+    "冻结": "fa-minus-circle"
+    "密码": "fa-lock"
+    "日志": "fa-clock-o"
+    "其他": "fa-tag"
+    "再次申请": "fa-refresh"
+    "放弃申请": "fa-times"
+    "付款": "fa-credit-card"
+    "付款记录": "fa-bars"
+    "订单详情": "fa-search-plus"
+    "作废": "fa-times"
+
+  # 用于Category配置参数 生成XML
+  inputs:
+    rule: [["text","字符类型"],["email","电子邮件类型"],["url","网址类型"],["date","日期类型"],["dateISO","日期类型(YYYY-MM-DD)"],["number","数字类型"],["digits","整数类型"]]
+    data_type: [["text","文本类型"],["radio","单选"],["checkbox","多选"],["select","下拉单选"],["multiple_select","下拉多选"],["textarea","大文本类型"],["richtext","富文本类型"],["hidden","隐藏类型"]]
+
+  # 提示信息
+  tips:
+    custom_default_cannot: "抱歉，您没有相关操作权限！"
+    audit_default_cannot: "抱歉，您没有审核权限或者本项目已被其他用户审核过了！"
+
+  # 暂无图片url
+  no_pic_url: "/plugins/images/404.gif"
+  # 导出Excel表头
+  excel_table_name:
+    "created_at": { name: "下单时间" }
+    "sn": { name: "凭证编号" }
+    "buyer_name": { name: "采购单位" }
+    "seller_name": { name: "供应商" }
+    "name": { name: "订单名称" }
+    "budget_money": { name: "预算金额（元）", class: "money" }
+    "total": { name: "订单金额（元）", class: "money" }
+    "yw_type": { name: "采购方式", to_cn: "Dictionary.yw_type['##to_cn##']" }
+    "status": { name: "订单状态", to_cn: "Dictionary.status_to_cn('##to_cn##')" }
+
+  # 超级用户的login
+  daboss: [ 'imadmin' ]
+
+  # 状态数组
+  # key: [状态中文, 状态数字]
+  # value: [状态标签颜色, 百分比数字]
+  # 可以修改、删除、提交、发布的状态：除7余数是0
+  # 等待审核的状态：除7余数是1
+  # 有效状态：除7余数是2
+  # 卖方处理状态：除7余数是3
+  # 买方处理状态：除7余数是4
+  # 完结的无效状态：除7余数是5
+  all_status:
+    # 可以修改、删除、提交、发布的状态：除7余数是0
+    # 标签颜色 暂存["orange", "橙色"] 拒绝["purple", "紫色"]["red", "红色"]
+    ["暂存", "0"]: ["orange", 10]
+    ["审核拒绝", "7"]: ["red", 20]
+    ["需求审核拒绝", "14"]: ["red", 20]
+    ["已撤回", "35"]: ["orange", 20]
+    ["卖方退回", "42"]: ["orange", 20]
+
+    # 等待审核的状态：除7余数是1
+    # 标签颜色 ["blue", "浅蓝"],["sea", "蓝绿色"]["aqua", "浅蓝色"]["dark-blue", "深蓝色"]
+    ["等待审核", "8"]: ["blue", 40]
+    ["需求等待审核", "15"]: ["blue", 30]
+    ["结果等待审核", "22"]: ["sea", 50]
+    ["废标等待审核", "29"]: ["sea", 50]
+    ["撤回等待审核", "36"]: ["aqua", 50]
+    ["作废等待审核", "43"]: ["aqua", 50]
+
+    # 有效状态：除7余数是2
+    # 标签颜色 已完成是["u", "草绿"], 其他有效状态是["yellow", "黄色"]
+    ["已完成", "100"]: ["u", 100]
+    ["自动生效", "2"]: ["yellow", 60]
+    ["审核通过", "9"]: ["yellow", 60]
+    ["已发布", "16"]: ["u", 40]
+    ["选定成交人", "23"]: ["u", 100]
+    ["拒绝撤回", "37"]: ["yellow", 60]
+    ["拒绝作废", "44"]: ["yellow", 60]
+    ["未使用", "51"]: ["u", 100]
+    ["未回复", "58"]: ["u", 80]
+    ["正常", "65"]: ["u", 100]
+    ["已生效", "72"]: ["u", 100]
+    ["付款处理中", "79"]: ["purple", 50]
+    ["等待付款", "86"]: ["purple", 50]
+    ["部分付款", "128"]: ["purple", 50]
+    ["等待评价", "93"]: ["blue", 80]
+    ["已成交", "107"]: ["yellow", 60]
+    # 计划采购的项目状态
+    ["可报需求", "114"]: ["yellow", 60]
+    ["可报结果", "121"]: ["blue", 80]
+
+    # 完结的无效状态：除7余数是5
+    # 标签颜色 ["dark", "黑色"]
+    ["已删除", "404"]: ["dark", 100]
+    ["已拆单", "5"]: ["dark", 100]
+    ["已冻结", "12"]: ["dark", 100]
+    ["已使用", "19"]: ["dark", 100]
+    ["已下架", "26"]: ["dark", 100]
+    ["已废标", "33"]: ["dark", 100]
+    ["已作废", "47"]: ["dark", 100]
+    ["已过期", "54"]: ["dark", 100]
+    ["已停止", "61"]: ["dark", 100]
+    ["停止申请", "68"]: ["dark", 100]
+    ["已回复", "75"]: ["dark", 100]
+
+    # 卖方处理状态：除7余数是3
+    # 标签颜色 ["brown", "棕色"]
+    ["等待卖方确认", "3"]: ["brown", 30]
+    ["买方退回", "10"]: ["brown", 30]
+    ["等待报价", "17"]: ["brown", 30]
+
+    # 买方处理状态：除7余数是4
+    # 标签颜色 ["light-green", "浅绿"]
+    ["等待买方确认", "4"]: ["light-green", 30]
+    ["等待收货", "11"]: ["light-green", 50]
+    ["等待选择成交人", "18"]: ["light-green", 50]
+    ["结果审核拒绝", "25"]: ["purple", 50]
+    ["废标审核拒绝", "32"]: ["purple", 50]
+    ["上传评估报告", "39"]: ["purple", 50]
+
+    # 支付状态： 除7余数是6
+    ["未送达", "6"]: ["red", 10]
+    ["正在处理", "13"]: ["orange", 50]
+    ["已付款", "20"]: ["u", 100]
+    ["付款失败", "27"]: ["red", 20]
+
+
+development:
+  <<: *defaults
+  env_tye: '开发模式'
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  env_tye: '生产模式'

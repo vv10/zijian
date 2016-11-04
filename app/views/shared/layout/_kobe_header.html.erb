@@ -1,0 +1,44 @@
+<div class="header">
+  <div class="container">
+    <!-- Logo -->
+    <a class="logo" href="<%= root_path %>">
+      <img src="<%= asset_path("logo_2.png") %>" alt="Logo">
+    </a>
+    <!-- End Logo -->
+
+    <!-- Topbar -->
+    <div class="topbar margin-top-10">
+      <ul class="loginbar pull-right">
+        <li><%= "您好，#{current_user.name} [#{link_to('进入后台', main_path)}]".html_safe %></li>
+        <li class="topbar-devider"></li>
+        <li><%= link_to '个人信息', kobe_users_path %></li>
+        <li class="topbar-devider"></li>
+        <li><a href="/users/sign_out">退出</a></li>
+      </ul>
+    </div>
+    <!-- End Topbar -->
+
+    <!-- Toggle get grouped for better mobile display -->
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="sr-only"></span>
+      <span class="fa fa-bars"></span>
+    </button>
+    <!-- End Toggle -->
+  </div><!--/end container-->
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <!-- Home -->
+        <li><%= link_to '<i class="icon-custom rounded-x icon-bg-dark icon-sm fa fa-picture-o"></i> 画颜醉色'.html_safe, products_path(2) %></li>
+        <li><%= link_to '<i class="icon-custom rounded-x icon-bg-dark icon-sm fa fa-inbox"></i> 书道黑白'.html_safe, products_path(1) %></li>
+        <li><%= link_to '<i class="icon-custom rounded-x icon-bg-dark icon-sm fa fa-coffee"></i> 一屋艺品'.html_safe, products_path(5) %></li>
+        <li><%= link_to '<i class="icon-custom rounded-x icon-bg-dark icon-sm icon icon-camera"></i> 画里画外'.html_safe, products_path(4) %></li>
+        <li><%= link_to '<i class="icon-custom rounded-x icon-bg-dark icon-sm fa fa-comments"></i> 众语评谈'.html_safe, products_path(3) %></li>
+        <!-- End Home -->
+
+      </ul>
+    </div>
+  </div><!--/navbar-collapse-->
+</div>

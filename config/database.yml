@@ -1,0 +1,15 @@
+# -*- encoding : utf-8 -*-
+## YAML Template
+production:
+  adapter: mysql2
+  username: root
+  host: localhost
+  encoding: utf8
+  database: jianzi
+
+development:
+  adapter: mysql2
+  username: root
+  host: localhost
+  encoding: utf8
+  database: jianzi
