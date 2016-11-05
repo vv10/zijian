@@ -24,3 +24,7 @@
   padding-bottom: 37px;
 }
 .text-indent-25{text-indent: 25px;}
+
+table td .thumbnail-style, table td .thumbnail-style .thumbnail-img {
+  margin: 0;
+}

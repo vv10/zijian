@@ -173,6 +173,11 @@ module BaseFunction
 
   # 显示图片 用于上传产品图片、注册单位上传证件 点小图弹出大图
   def show_picture(small_pic_url, large_pic_url, title = "", rel = 'pics')
+    title_div = %Q{
+      <div class="caption">
+        <p class="word_break">#{title}</p>
+      </div>
+    }
     %Q{
       <div class="thumbnails thumbnail-style thumbnail-kenburn">
         <div class="thumbnail-img">
@@ -182,9 +187,7 @@ module BaseFunction
             </a>
           </div>
         </div>
-        <div class="caption">
-          <p class="word_break">#{title}</p>
-        </div>
+        #{title_div if title.present?}
       </div>
       }.html_safe
   end
