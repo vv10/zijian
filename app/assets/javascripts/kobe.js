@@ -7,6 +7,7 @@
 
 
 $(function() {
+  App.initCounter();
   FancyBox.initFancybox(); // 初始化 图片展示
 });
 

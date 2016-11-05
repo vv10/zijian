@@ -11,8 +11,11 @@
  *= require plugins/animate
  *= require plugins/line-icons
  *= require plugins/font-awesome/font-awesome.min
+ *= require pages/page_404_error
+ *
  *= require default
  *= require custom
+ *
  *
  *= require_self
  *

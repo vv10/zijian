@@ -1,10 +1,53 @@
-<div class="profile">
-	<div class="row">
-        <div class="col-md-3 md-margin-bottom-40">
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <title><%= Dictionary.web_site_name %> <%= yield(:title).presence %></title>
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="zcl">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <link rel="shortcut icon" href="/favicon.ico">
 
-            <!--Datepicker-->
-            <!--End Datepicker-->
-        </div>
+  <!-- CSS Global Compulsory -->
+  <%= stylesheet_link_tag "kobe" %>
+  <%= javascript_include_tag "application" %>
 
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <!--=== Header ===-->
+    <%= render :partial => '/shared/layout/kobe_header' %>
+
+    <div class="parallax-counter-v2 parallaxBg1 mt80 mb60" style="background-position: 50% 81px;">
+      <div class="container">
+        <ul class="row list-row">
+          <% @counters.each do |a| %>
+          <li class="col-md-3 col-sm-6 col-xs-12 md-margin-bottom-30">
+            <div class="counters rounded">
+              <span class="counter"><%= a[1] %></span>
+              <h4><%= Category.find_by(id: a[0]).try(:name) %></h4>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-</div>
+    <%= render :partial => '/shared/layout/james_footer' %>
+    <!--=== End Copyright ===-->
+  </div><!--/End Wrapepr-->
+
+<!--[if lt IE 9]>
+    <%= javascript_include_tag "ie_9" %>
+    <![endif]-->
+    <%= javascript_include_tag "kobe" %>
+    <%= render :partial => '/shared/myform/fileupload_layout' %>
+    <%= render partial: '/shared/dialog/art_dialog' %>
+  </body>
+  </html>
+
