@@ -27,6 +27,7 @@
  *= require pages/shortcode_timeline2
  *= require app
  *= require blocks
+ *= require plugins
  *= require_self
  */
 
