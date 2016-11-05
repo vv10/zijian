@@ -132,7 +132,7 @@
 .tc { text-align: center; }
 .menu_ul {
   text-align: center;
-  margin: 40px 0;
+  margin-top: 40px;
 }
 .menu_ul li {
   display: inline;

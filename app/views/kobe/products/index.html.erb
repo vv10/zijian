@@ -26,10 +26,10 @@
             <thead>
                 <tr>
                     <th class="index">序号</th>
+                    <th>缩略图</th>
                     <th class="hidden-sm">作品编号</th>
                     <th>作品名称</th>
-                    <th>类别</th>
-                    <th>尺寸</th>
+                    <th>栏目</th>
                     <th class="status_badge"><%= status_filter(Product) %></th>
                     <th class="date">上传时间</th>
                     <th class="cando">操作</th>
@@ -39,10 +39,10 @@
                 <% @products.each_with_index do |product,index| %>
                 <tr>
                     <td><%= show_index(index) %></td>
+                    <td class="tc"><%= show_picture(product.picture.upload.url(:thumbnail), product.picture.upload.url(:lg)) %></td>
                     <td><%= product.pcode %></td>
                     <td><%= product.title %></td>
-                    <td><%= product.ptype %></td>
-                    <td><%= product.psize %></td>
+                    <td><%= product.menu %></td>
                     <td><%= product.status_badge %></td>
                     <td><%= show_date(product.created_at) %></td>
                     <td><%= btn_group(products_btn(product)) %></td>
