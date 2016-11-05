@@ -7,7 +7,7 @@ module JamesHelper
     ha.each do |k, v|
       if v == "active"
         str << "<li class='active'>#{k}</li>"
-      else
+      elsif !k.blank?
         str << "<li>#{link_to k, v}</li>"
       end
     end

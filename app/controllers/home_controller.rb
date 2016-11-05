@@ -27,4 +27,8 @@ class HomeController < JamesController
     @ps = Product.where(category_id: @product.category_id, psize: @product.psize, ptype: @product.ptype).where.not(id: @product.id).limit(4)
   end
 
+  def hesay
+
+  end
+
 end
