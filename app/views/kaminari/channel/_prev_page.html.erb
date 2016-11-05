@@ -7,8 +7,8 @@
     remote:        data-remote
 -%>
 <li class="prev">
-	<% url = url.split("?").first -%>
-	<% 
+	<%# url = url.split("?").first -%>
+	<%#
 		combos = params[:combo].split("_")
     combos[Product::QS.index("page")] = current_page - 1
     combos.each_with_index{|o, i| combos[i] = 0 if o.nil?}

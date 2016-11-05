@@ -39,11 +39,11 @@ module KobeHelper
     return '' if model_name.blank?
     str = ""
     opt = []
-    opt << {onclick_func: "addTreeNode();", icon_class: "icon-plus", opt_name: "增加"} if can? :create, model_name.constantize
-    opt << {onclick_func: "editTreeNode();", icon_class: "icon-wrench", opt_name: "修改"} if can? :update, model_name.constantize
-    opt << {onclick_func: "removeTreeNode();", icon_class: "icon-trash", opt_name: "删除"} if can? :update_destroy, model_name.constantize
-    opt << {onclick_func: "freezeTreeNode();", icon_class: "icon-ban", opt_name: "冻结"} if can? :update_freeze, model_name.constantize
-    opt << {onclick_func: "recoverTreeNode();", icon_class: "icon-action-undo", opt_name: "恢复"} if can? :update_recover, model_name.constantize
+    opt << {onclick_func: "addTreeNode();", icon_class: "icon-plus", opt_name: "增加"} #if can? :create, model_name.constantize
+    opt << {onclick_func: "editTreeNode();", icon_class: "icon-wrench", opt_name: "修改"} #if can? :update, model_name.constantize
+    opt << {onclick_func: "removeTreeNode();", icon_class: "icon-trash", opt_name: "删除"} #if can? :update_destroy, model_name.constantize
+    opt << {onclick_func: "freezeTreeNode();", icon_class: "icon-ban", opt_name: "冻结"} #if can? :update_freeze, model_name.constantize
+    opt << {onclick_func: "recoverTreeNode();", icon_class: "icon-action-undo", opt_name: "恢复"} #if can? :update_recover, model_name.constantize
 
     opt.each do |ha|
       str << %Q{

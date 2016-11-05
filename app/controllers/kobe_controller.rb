@@ -104,7 +104,8 @@ class KobeController < ApplicationController
 
     # 自定义条件判断没有某权限的提示
     def cannot_do_tips(msg=Dictionary.tips.custom_default_cannot)
-      raise CanCan::AccessDenied.new(msg)
+      msg
+      # raise CanCan::AccessDenied.new(msg)
     end
 
     # 审核提示

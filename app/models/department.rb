@@ -9,29 +9,29 @@ class Department < ActiveRecord::Base
   # scope :supplier_by_name, ->(name) { where(status: self.effective_status, ancestry: Dictionary.dep_supplier_id).where("find_in_set('#{name}', old_name)>0 or name = '#{name}'") }
 
   default_value_for :is_secret, true
-  default_value_for :comment_total, 0
+  # default_value_for :comment_total, 0
   default_value_for :is_blacklist, false
 
 
   include AboutAncestry
   include AboutStatus
 
-  default_value_for :status, 0
+  default_value_for :status, 65
 
-  before_create do
-    # 设置rule_id和rule_step
-    init_rule
-  end
+  # before_create do
+  #   # 设置rule_id和rule_step
+  #   init_rule
+  # end
 
-  after_save do
-    real_ancestry_arr = []
-    real_ancestry_arr << self.ancestors.where(dep_type: false).map(&:id) if self.ancestors.present?
-    real_ancestry_arr << self.id unless self.dep_type
+  # after_save do
+    # real_ancestry_arr = []
+    # real_ancestry_arr << self.ancestors.where(dep_type: false).map(&:id) if self.ancestors.present?
+    # real_ancestry_arr << self.id unless self.dep_type
 
-    unless self.real_ancestry == real_ancestry_arr.join("/")
-      self.real_ancestry = real_ancestry_arr.join("/") # 祖先和自己中是独立核算单位的id
-      self.save
-    end
+    # unless self.real_ancestry == real_ancestry_arr.join("/")
+    #   self.real_ancestry = real_ancestry_arr.join("/") # 祖先和自己中是独立核算单位的id
+    #   self.save
+    # end
 
     # 判断是不是入围供应商
     # item_deps = ItemDepartment.where(name: self.name, department_id: nil)
@@ -39,61 +39,61 @@ class Department < ActiveRecord::Base
 
     # # 开通日预算 默认应用到下级单位
     # self.subtree.where.not(status: 404).update_all(rys_switch: self.rys_switch)
-  end
+  # end
 
   # 有效的入围项目
-  def effective_items
-    self.items.where(status: Item.effective_status)
-  end
+  # def effective_items
+  #   self.items.where(status: Item.effective_status)
+  # end
 
-  # 拆分real_ancestry 获取独立核算单位的id数组
-  def real_ancestry_id_arr
-    self.real_ancestry.split("/")
-  end
+  # # 拆分real_ancestry 获取独立核算单位的id数组
+  # def real_ancestry_id_arr
+  #   self.real_ancestry.split("/")
+  # end
 
-  # 获取单位的第几层祖先 例如总公司(level = 1)还是分公司(level = 2) 单位存在返回该单位 不存在返回nil
-  def real_ancestry_level(level)
-    dep_id = self.real_ancestry_id_arr[level.to_i]
-    return dep_id.present? ? Department.find_by(id: dep_id) : nil
-  end
+  # # 获取单位的第几层祖先 例如总公司(level = 1)还是分公司(level = 2) 单位存在返回该单位 不存在返回nil
+  # def real_ancestry_level(level)
+  #   dep_id = self.real_ancestry_id_arr[level.to_i]
+  #   return dep_id.present? ? Department.find_by(id: dep_id) : nil
+  # end
 
-  # 发票单位 real_ancestry最后一位
-  def real_dep
-    dep_id = self.real_ancestry_id_arr.last
-    return Department.find_by(id: dep_id)
-  end
+  # # 发票单位 real_ancestry最后一位
+  # def real_dep
+  #   dep_id = self.real_ancestry_id_arr.last
+  #   return Department.find_by(id: dep_id)
+  # end
 
-  # 上级单位
-  def top_dep
-    return nil unless is_dep_purchaser?
-    return real_dep if is_fgs? || is_zgs?
-    Department.find_by(id: real_ancestry_id_arr[2])
-  end
+  # # 上级单位
+  # def top_dep
+  #   return nil unless is_dep_purchaser?
+  #   return real_dep if is_fgs? || is_zgs?
+  #   Department.find_by(id: real_ancestry_id_arr[2])
+  # end
 
   # 独立核算单位下的所有用户
   def real_users
     Department.where(real_ancestry: self.real_ancestry).map(&:users).flatten.uniq
   end
 
-  # 判断单位是不是分公司
-  def is_fgs?
-    self.is_dep_purchaser? && self.real_ancestry_id_arr.size == 3
-  end
+  # # 判断单位是不是分公司
+  # def is_fgs?
+  #   self.is_dep_purchaser? && self.real_ancestry_id_arr.size == 3
+  # end
 
-  # 判断单位是不是总公司
-  def is_zgs?
-    self.is_dep_purchaser? && self.real_ancestry_id_arr.size == 2
-  end
+  # # 判断单位是不是总公司
+  # def is_zgs?
+  #   self.is_dep_purchaser? && self.real_ancestry_id_arr.size == 2
+  # end
 
-  # 判断单位是不是采购单位
-  def is_dep_purchaser?
-    self.root_id == Dictionary.dep_purchaser_id
-  end
+  # # 判断单位是不是采购单位
+  # def is_dep_purchaser?
+  #   self.root_id == Dictionary.dep_purchaser_id
+  # end
 
-  # 判断单位是不是供应商
-  def is_dep_supplier?
-    self.root_id == Dictionary.dep_supplier_id
-  end
+  # # 判断单位是不是供应商
+  # def is_dep_supplier?
+  #   self.root_id == Dictionary.dep_supplier_id
+  # end
 
   # 中文意思 状态值 标签颜色 进度
   def self.status_array
@@ -163,10 +163,10 @@ class Department < ActiveRecord::Base
   #   }
   # end
 
-  # 附件的类
-  def self.upload_model
-    DepartmentsUpload
-  end
+  # # 附件的类
+  # def self.upload_model
+  #   DepartmentsUpload
+  # end
 
   # 列表中的状态筛选,current_status当前状态不可以点击
   # def self.status_filter(action='')
@@ -175,13 +175,13 @@ class Department < ActiveRecord::Base
   # 	arr = self.status_array.delete_if{|a|limited.include?(a[1])}.map{|a|[a[0],a[1]]}
   # end
 
-  def self.purchaser
-    Department.find_by(id: Dictionary.dep_purchaser_id)
-  end
+  # def self.purchaser
+  #   Department.find_by(id: Dictionary.dep_purchaser_id)
+  # end
 
-  def self.supplier
-    Department.find_by(id: Dictionary.dep_supplier_id)
-  end
+  # def self.supplier
+  #   Department.find_by(id: Dictionary.dep_supplier_id)
+  # end
 
   # 本单位是不是某单位ID的上级单位
   def is_ancestors?(dep_id)
@@ -190,16 +190,16 @@ class Department < ActiveRecord::Base
 
   # 根据action_name 判断obj有没有操作
   def cando(act='',current_u)
-    cdt = current_u.is_admin || current_u.is_manage? || Dictionary.file_manager.include?(current_u.login)
+    # cdt = current_u.is_admin || current_u.is_manage? || Dictionary.file_manager.include?(current_u.login)
     case act
     when "show", "index"
       true
     when "update", "edit", "upload", "update_upload", "show_bank", "edit_bank", "update_bank"
-      self.class.edit_status.include?(self.status) && cdt
-    when "commit"
-      self.get_tips.blank? && self.can_opt?("提交") && cdt
+      self.class.edit_status.include?(self.status)# && cdt
+    # when "commit"
+    #   self.get_tips.blank? && self.can_opt?("提交")# && cdt
     when "add_user", "update_add_user", "new", "create"
-      self.class.effective_status.include?(self.status) && cdt
+      self.class.effective_status.include?(self.status)# && cdt
     when "update_audit", "audit"
       self.class.audit_status.include?(self.status)
     when "delete", "destroy"
@@ -213,29 +213,29 @@ class Department < ActiveRecord::Base
   end
 
   # 获取提示信息 用于1.注册完成时提交的提示信息、2.登录后验证个人信息是否完整
-  def get_tips
-    msg = []
-    if self.class.only_edit_status.include?(self.status)
-      msg << "单位信息填写不完整，请点击[修改]。" if self.area_id.blank?
-      msg << "上传附件的不全，请点击[上传附件]。" if self.uploads.length < 2
-      msg << "开户银行信息不完整，请点击[维护开户银行]" if self.bank.blank? || self.bank_code.blank?
-      msg << "用户信息填写不完整，请在用户列表中点击[修改]。" if self.users.find{ |u| u.name.present? }.blank?
-    end
-    return msg
-  end
+  # def get_tips
+  #   msg = []
+  #   if self.class.only_edit_status.include?(self.status)
+  #     msg << "单位信息填写不完整，请点击[修改]。" if self.area_id.blank?
+  #     msg << "上传附件的不全，请点击[上传附件]。" if self.uploads.length < 2
+  #     msg << "开户银行信息不完整，请点击[维护开户银行]" if self.bank.blank? || self.bank_code.blank?
+  #     msg << "用户信息填写不完整，请在用户列表中点击[修改]。" if self.users.find{ |u| u.name.present? }.blank?
+  #   end
+  #   return msg
+  # end
 
-  def show_tips_arr
-    arr = []
-    arr << (self.get_tips.present? || self.status == 7 ? 'error' : 'tips')
-    arr << (self.get_tips.present? || self.status == 7 ? '很抱歉！' : '恭喜您！')
-    tips = self.status == 7 ? self.get_last_node_by_logs('[操作内容 *= "审核"]')["备注"] : '账户信息已填写完整，请点击[提交]，提交并等待审核。'
-    arr << (self.get_tips.present? ? self.get_tips : tips )
-  end
+  # def show_tips_arr
+  #   arr = []
+  #   arr << (self.get_tips.present? || self.status == 7 ? 'error' : 'tips')
+  #   arr << (self.get_tips.present? || self.status == 7 ? '很抱歉！' : '恭喜您！')
+  #   tips = self.status == 7 ? self.get_last_node_by_logs('[操作内容 *= "审核"]')["备注"] : '账户信息已填写完整，请点击[提交]，提交并等待审核。'
+  #   arr << (self.get_tips.present? ? self.get_tips : tips )
+  # end
 
-  # 维护开户银行提示
-  def bank_tips
-    Dictionary.tips.bank
-  end
+  # # 维护开户银行提示
+  # def bank_tips
+  #   Dictionary.tips.bank
+  # end
 
   # 是否需要隐藏树形结构 用于没有下级单位的单位 不显示树
   def hide_tree?
@@ -244,224 +244,220 @@ class Department < ActiveRecord::Base
 
   # 根据单位的祖先节点判断单位是采购单位还是供应商
   def get_xml(who='')
-    case self.try(:root_id)
-    when Dictionary.dep_purchaser_id
+    # case self.try(:root_id)
+    # when Dictionary.dep_purchaser_id
       Department.purchaser_xml(who)
-    when Dictionary.dep_supplier_id
-      Department.supplier_xml(who)
-    else
-      Department.other_xml(who)
-    end
+    # when Dictionary.dep_supplier_id
+    #   Department.supplier_xml(who)
+    # else
+    #   Department.other_xml(who)
+    # end
   end
 
   # 采购单位XML
   def self.purchaser_xml(who='',options={})
-    tmp = ""
-    if who.present? && who.is_boss?
-      tmp = %Q{
-        <node name='日预算编码' column='rys_code'/>
-        <node name='开通日预算' column='rys_switch' data_type='radio' data='#{Dictionary.yes_or_no}' hint='默认应用到下级单位。'/>
-      }
-    end
+    # tmp = ""
+    # if who.present? && who.is_boss?
+    #   tmp = %Q{
+    #     <node name='日预算编码' column='rys_code'/>
+    #     <node name='开通日预算' column='rys_switch' data_type='radio' data='#{Dictionary.yes_or_no}' hint='默认应用到下级单位。'/>
+    #   }
+    # end
     %Q{
       <?xml version='1.0' encoding='UTF-8'?>
       <root>
         <node name='parent_id' data_type='hidden'/>
         <node name='单位名称' column='name' hint='必须与营业执照中的单位名称保持一致' rules='{required:true, maxlength:30, minlength:3, remote: { url:"/kobe/departments/valid_dep_name", type:"post" }}'/>
         <node name='单位简称' column='short_name'/>
-        <node name='曾用名' column='old_name' display='disabled'/>
-        <node name='单位类型' column='dep_type' data_type='radio' data='[[0,"独立核算单位"],[1,"部门"]]' hint='“独立核算单位”是指财务独立，需要单独开具发票的单位。'/>
+        <node name='曾用名' column='old_name'/>
         <node name='邮政编码' column='post_code' rules='{required:true, number:true}'/>
-        <node name='所在地区' class='tree_radio required' json_url='/kobe/shared/ztree_json' json_params='{"json_class":"Area"}' partner='area_id'/>
-        <node column='area_id' data_type='hidden'/>
-        <node name='详细地址' column='address' class='required'/>
-        <node name='电话（总机）' column='tel' class='required'/>
-        <node name='传真' column='fax' class='required'/>
-        #{tmp}
-      </root>
-    }
-  end
-
-  # 供应商XML
-  def self.supplier_xml(who='',options={})
-    %Q{
-      <?xml version='1.0' encoding='UTF-8'?>
-      <root>
-        <node name='parent_id' data_type='hidden'/>
-        <node name='单位名称' column='name' hint='必须与营业执照中的单位名称保持一致' rules='{required:true, maxlength:30, minlength:6, remote: { url:"/kobe/departments/valid_dep_name", type:"post" }}'/>
-        <node name='单位简称' column='short_name'/>
-        <node name='曾用名' column='old_name' #{"display='disabled'" unless who.present? && who.is_boss?}/>
-        <node name='单位类型' column='dep_type' data_type='radio' data='[[0,"独立核算单位"],[1,"部门"]]' hint='独立核算单位是****************'/>
-        <node name='营业执照注册号' column='license' hint='请参照营业执照上的注册号' rules='{required:true, minlength:15}' messages='请输入15个字符'/>
-        <node name='税务登记证' column='tax' hint='请参照税务登记证上的号码' rules='{required:true, minlength:15}' messages='请输入15个字符'/>
-        <node name='组织机构代码' column='org_code' hint='请参照组织机构代码证上的代码' rules='{required:true, minlength:10}' messages='请输入10个字符'/>
-        <node name='单位法人姓名' column='legal_name' class='required'/>
-        <node name='单位法人证件类型' class='required' data_type='radio' data='["居民身份证","驾驶证","护照"]'/>
-        <node name='单位法人证件号码' column='legal_number' class='required' rules='{maxlength:18, minlength:18}'/>
-        <node name='注册资金' column='capital' class='required'/>
-        <node name='年营业额' column='turnover' class='required'/>
-        <node name='单位人数' column='employee' data_type='radio' class='required' data='["20人以下","21-100人","101-500人","501-1001人","1001-10000人","1000人以上"]'/>
-        <node name='邮政编码' column='post_code' rules='{required:true, number:true}'/>
-        <node name='所在地区' class='tree_radio required' json_url='/kobe/shared/ztree_json' json_params='{"json_class":"Area"}' partner='area_id'/>
-        <node column='area_id' data_type='hidden'/>
         <node name='详细地址' column='address' class='required'/>
         <node name='公司网址' column='website'/>
-        <node name='电话（总机）' column='tel' class='required'/>
-        <node name='传真' column='fax' class='required'/>
         <node name='单位介绍' column='summary' data_type='textarea' class='required' placeholder='不超过800字'/>
       </root>
     }
   end
 
-  # 其他单位XML
-  def self.other_xml(who='',options={})
-    %Q{
-      <?xml version='1.0' encoding='UTF-8'?>
-      <root>
-        <node name='parent_id' data_type='hidden'/>
-        <node name='单位名称' column='name' hint='必须与营业执照中的单位名称保持一致' rules='{required:true, maxlength:30, minlength:3, remote: { url:"/kobe/departments/valid_dep_name", type:"post" }}'/>
-        <node name='单位简称' column='short_name'/>
-        <node name='曾用名' column='old_name' display='disabled'/>
-      </root>
-    }
-  end
+  # # 供应商XML
+  # def self.supplier_xml(who='',options={})
+  #   %Q{
+  #     <?xml version='1.0' encoding='UTF-8'?>
+  #     <root>
+  #       <node name='parent_id' data_type='hidden'/>
+  #       <node name='单位名称' column='name' hint='必须与营业执照中的单位名称保持一致' rules='{required:true, maxlength:30, minlength:6, remote: { url:"/kobe/departments/valid_dep_name", type:"post" }}'/>
+  #       <node name='单位简称' column='short_name'/>
+  #       <node name='曾用名' column='old_name' #{"display='disabled'" unless who.present? && who.is_boss?}/>
+  #       <node name='单位类型' column='dep_type' data_type='radio' data='[[0,"独立核算单位"],[1,"部门"]]' hint='独立核算单位是****************'/>
+  #       <node name='营业执照注册号' column='license' hint='请参照营业执照上的注册号' rules='{required:true, minlength:15}' messages='请输入15个字符'/>
+  #       <node name='税务登记证' column='tax' hint='请参照税务登记证上的号码' rules='{required:true, minlength:15}' messages='请输入15个字符'/>
+  #       <node name='组织机构代码' column='org_code' hint='请参照组织机构代码证上的代码' rules='{required:true, minlength:10}' messages='请输入10个字符'/>
+  #       <node name='单位法人姓名' column='legal_name' class='required'/>
+  #       <node name='单位法人证件类型' class='required' data_type='radio' data='["居民身份证","驾驶证","护照"]'/>
+  #       <node name='单位法人证件号码' column='legal_number' class='required' rules='{maxlength:18, minlength:18}'/>
+  #       <node name='注册资金' column='capital' class='required'/>
+  #       <node name='年营业额' column='turnover' class='required'/>
+  #       <node name='单位人数' column='employee' data_type='radio' class='required' data='["20人以下","21-100人","101-500人","501-1001人","1001-10000人","1000人以上"]'/>
+  #       <node name='邮政编码' column='post_code' rules='{required:true, number:true}'/>
+  #       <node name='所在地区' class='tree_radio required' json_url='/kobe/shared/ztree_json' json_params='{"json_class":"Area"}' partner='area_id'/>
+  #       <node column='area_id' data_type='hidden'/>
+  #       <node name='详细地址' column='address' class='required'/>
+  #       <node name='公司网址' column='website'/>
+  #       <node name='电话（总机）' column='tel' class='required'/>
+  #       <node name='传真' column='fax' class='required'/>
+  #       <node name='单位介绍' column='summary' data_type='textarea' class='required' placeholder='不超过800字'/>
+  #     </root>
+  #   }
+  # end
 
-  # 采购单位进入后台的统计数据
-  def get_dep_main
-    # 本辖区本年度 采购方式占比
-    type_arr = []
-    cdt = "year(created_at) = '#{Time.now.year}' and status in (#{Order.effective_status.join(', ')})"
-    total = Order.find_all_by_buyer_code(self.real_dep.id).where(cdt).sum(:total)
-    order_count = Order.find_all_by_buyer_code(self.real_dep.id).where(cdt).count
-    if total.present?
-      type = Order.find_all_by_buyer_code(self.real_dep.id).where(cdt).group('yw_type').select('yw_type, sum(total) as total')
-      type_arr = type.map{ |e| [e.yw_type, e.total.to_f, (e.total*100/total).to_f] }
-    end
+  # # 其他单位XML
+  # def self.other_xml(who='',options={})
+  #   %Q{
+  #     <?xml version='1.0' encoding='UTF-8'?>
+  #     <root>
+  #       <node name='parent_id' data_type='hidden'/>
+  #       <node name='单位名称' column='name' hint='必须与营业执照中的单位名称保持一致' rules='{required:true, maxlength:30, minlength:3, remote: { url:"/kobe/departments/valid_dep_name", type:"post" }}'/>
+  #       <node name='单位简称' column='short_name'/>
+  #       <node name='曾用名' column='old_name' display='disabled'/>
+  #     </root>
+  #   }
+  # end
 
-    # 粮机类、汽车、办公类采购统计
-    category = Order.find_all_by_buyer_code(self.real_dep.id).where(cdt).group('ht_template').select('ht_template, sum(total) as total')
-    category_ha = {}
-    category.map{ |e| category_ha[e.ht_template] = e.total.to_f }
+  # # 采购单位进入后台的统计数据
+  # def get_dep_main
+  #   # 本辖区本年度 采购方式占比
+  #   type_arr = []
+  #   cdt = "year(created_at) = '#{Time.now.year}' and status in (#{Order.effective_status.join(', ')})"
+  #   total = Order.find_all_by_buyer_code(self.real_dep.id).where(cdt).sum(:total)
+  #   order_count = Order.find_all_by_buyer_code(self.real_dep.id).where(cdt).count
+  #   if total.present?
+  #     type = Order.find_all_by_buyer_code(self.real_dep.id).where(cdt).group('yw_type').select('yw_type, sum(total) as total')
+  #     type_arr = type.map{ |e| [e.yw_type, e.total.to_f, (e.total*100/total).to_f] }
+  #   end
 
-    str = "<div class='tag-box tag-box-v3 margin-bottom-10'>"
-    str << show_header("本年度辖区内采购情况", 'fa-line-chart')
-    str << show_category_total("订单数量", "#{order_count} 个")
-    str << show_category_total("采购金额", format_total(total))
-    str << "</div>"
+  #   # 粮机类、汽车、办公类采购统计
+  #   category = Order.find_all_by_buyer_code(self.real_dep.id).where(cdt).group('ht_template').select('ht_template, sum(total) as total')
+  #   category_ha = {}
+  #   category.map{ |e| category_ha[e.ht_template] = e.total.to_f }
 
-    str << "<div class='tag-box tag-box-v3 margin-bottom-10'>"
-    str << show_header("粮机物资采购情况", 'fa-magnet')
-    str << show_category_total("粮机设备", format_total(category_ha['lj']))
-    str << show_category_total("建筑工程", format_total(category_ha['gc']))
-    str << show_category_total("包装物采购", format_total(category_ha['bzw']))
+  #   str = "<div class='tag-box tag-box-v3 margin-bottom-10'>"
+  #   str << show_header("本年度辖区内采购情况", 'fa-line-chart')
+  #   str << show_category_total("订单数量", "#{order_count} 个")
+  #   str << show_category_total("采购金额", format_total(total))
+  #   str << "</div>"
 
-    str << show_header("汽车采购情况", 'fa-car')
-    str << show_category_total("汽车采购", format_total(category_ha['qc']))
+  #   str << "<div class='tag-box tag-box-v3 margin-bottom-10'>"
+  #   str << show_header("粮机物资采购情况", 'fa-magnet')
+  #   str << show_category_total("粮机设备", format_total(category_ha['lj']))
+  #   str << show_category_total("建筑工程", format_total(category_ha['gc']))
+  #   str << show_category_total("包装物采购", format_total(category_ha['bzw']))
 
-    str << show_header("办公物资采购情况", 'fa-desktop')
-    str << show_category_total("办公物资", format_total(category_ha['bg']))
-    str << show_category_total("网上商城", format_total(category_ha['ds']))
-    str << show_category_total("职工工装", format_total(category_ha['gz']))
-    str << "</div>"
+  #   str << show_header("汽车采购情况", 'fa-car')
+  #   str << show_category_total("汽车采购", format_total(category_ha['qc']))
 
-    str << "<div class='tag-box tag-box-v3 margin-bottom-10'>"
-    str << show_header("本年度辖区内采购方式占比", 'fa-pie-chart')
-    str << "<div class='margin-left-20'>"
-    Dictionary.yw_type.each_with_index do |a, i|
-      next if a[0] == 'grcg'
-      yw_type = type_arr.find{|e| e[0] == a[0]}
-      str << progress_bar(a[1], (yw_type.present? ? yw_type[2] : 0), Dictionary.colors.map(&:first)[i], format_total(yw_type.present? ? yw_type[1] : 0))
-    end
-    str << "</div></div>"
-  end
+  #   str << show_header("办公物资采购情况", 'fa-desktop')
+  #   str << show_category_total("办公物资", format_total(category_ha['bg']))
+  #   str << show_category_total("网上商城", format_total(category_ha['ds']))
+  #   str << show_category_total("职工工装", format_total(category_ha['gz']))
+  #   str << "</div>"
 
-  # 供应商销量统计
-  def get_seller_main
-    # 本年度 销售占比
-    type_arr = []
-    cdt = "year(created_at) = '#{Time.now.year}' and status in (#{Order.effective_status.join(', ')})"
-    total = Order.find_all_by_seller(self.real_dep.id, self.real_dep.name).where(cdt).sum(:total)
-    order_count = Order.find_all_by_seller(self.real_dep.id, self.real_dep.name).where(cdt).count
-    if total.present?
-      type = Order.find_all_by_seller(self.real_dep.id, self.real_dep.name).where(cdt).group('yw_type').select('yw_type, sum(total) as total')
-      type_arr = type.map{ |e| [e.yw_type, e.total.to_f, (e.total*100/total).to_f] }
-    end
+  #   str << "<div class='tag-box tag-box-v3 margin-bottom-10'>"
+  #   str << show_header("本年度辖区内采购方式占比", 'fa-pie-chart')
+  #   str << "<div class='margin-left-20'>"
+  #   Dictionary.yw_type.each_with_index do |a, i|
+  #     next if a[0] == 'grcg'
+  #     yw_type = type_arr.find{|e| e[0] == a[0]}
+  #     str << progress_bar(a[1], (yw_type.present? ? yw_type[2] : 0), Dictionary.colors.map(&:first)[i], format_total(yw_type.present? ? yw_type[1] : 0))
+  #   end
+  #   str << "</div></div>"
+  # end
 
-    str = "<div class='tag-box tag-box-v3 margin-bottom-10'>"
-    str << show_header("本年度销售情况", 'fa-line-chart ')
-    str << show_category_total("订单数量", "#{order_count} 个")
-    str << show_category_total("销售金额", format_total(total))
-    str << "</div>"
+  # # 供应商销量统计
+  # def get_seller_main
+  #   # 本年度 销售占比
+  #   type_arr = []
+  #   cdt = "year(created_at) = '#{Time.now.year}' and status in (#{Order.effective_status.join(', ')})"
+  #   total = Order.find_all_by_seller(self.real_dep.id, self.real_dep.name).where(cdt).sum(:total)
+  #   order_count = Order.find_all_by_seller(self.real_dep.id, self.real_dep.name).where(cdt).count
+  #   if total.present?
+  #     type = Order.find_all_by_seller(self.real_dep.id, self.real_dep.name).where(cdt).group('yw_type').select('yw_type, sum(total) as total')
+  #     type_arr = type.map{ |e| [e.yw_type, e.total.to_f, (e.total*100/total).to_f] }
+  #   end
 
-    str << "<div class='tag-box tag-box-v3 margin-bottom-10'>"
-    str << show_header("本年度销售方式占比", 'fa-pie-chart')
-    str << "<div class='margin-left-20'>"
-    Dictionary.yw_type.each_with_index do |a, i|
-      next if a[0] == 'grcg'
-      yw_type = type_arr.find{|e| e[0] == a[0]}
-      str << progress_bar(a[1], (yw_type.present? ? yw_type[2] : 0), Dictionary.colors.map(&:first)[i], format_total(yw_type.present? ? yw_type[1] : 0))
-    end
-    str << "</div></div>"
-  end
+  #   str = "<div class='tag-box tag-box-v3 margin-bottom-10'>"
+  #   str << show_header("本年度销售情况", 'fa-line-chart ')
+  #   str << show_category_total("订单数量", "#{order_count} 个")
+  #   str << show_category_total("销售金额", format_total(total))
+  #   str << "</div>"
 
-  # 生产单位采购或销量统计的缓存
-  def cache_dep_main(force = false)
-    if force
-      Setting.send("dep_main_#{self.id}=", (self.is_dep_purchaser? ? get_dep_main : get_seller_main))
-    else
-      Setting.send("dep_main_#{self.id}=", (self.is_dep_purchaser? ? get_dep_main : get_seller_main)) if Setting.send("dep_main_#{self.id}").blank?
-    end
-    Setting.send("dep_main_#{self.id}")
-  end
+  #   str << "<div class='tag-box tag-box-v3 margin-bottom-10'>"
+  #   str << show_header("本年度销售方式占比", 'fa-pie-chart')
+  #   str << "<div class='margin-left-20'>"
+  #   Dictionary.yw_type.each_with_index do |a, i|
+  #     next if a[0] == 'grcg'
+  #     yw_type = type_arr.find{|e| e[0] == a[0]}
+  #     str << progress_bar(a[1], (yw_type.present? ? yw_type[2] : 0), Dictionary.colors.map(&:first)[i], format_total(yw_type.present? ? yw_type[1] : 0))
+  #   end
+  #   str << "</div></div>"
+  # end
 
-  # 显示main 统计的标题
-  def show_header(title, icon='fa-bar-chart-o')
-    %Q{
-      <div class="panel-heading-v2 overflow-h">
-        <h3 class="heading-xs pull-left"><i class="fa #{icon}"></i> #{title}</h3>
-      </div>
-      <hr/>
-    }
-  end
+  # # 生产单位采购或销量统计的缓存
+  # def cache_dep_main(force = false)
+  #   if force
+  #     Setting.send("dep_main_#{self.id}=", (self.is_dep_purchaser? ? get_dep_main : get_seller_main))
+  #   else
+  #     Setting.send("dep_main_#{self.id}=", (self.is_dep_purchaser? ? get_dep_main : get_seller_main)) if Setting.send("dep_main_#{self.id}").blank?
+  #   end
+  #   Setting.send("dep_main_#{self.id}")
+  # end
 
-  # 后台main 统计采购方式占比
-  def progress_bar(name, num, color='u', title=name)
-    percent = num == 0 ? 0 : format("%0.2f", num)
-    %Q{
-      <h3 class="heading-xs" title="#{title}">#{name} <span class="pull-right">#{percent}%</span></h3>
-      <div class="progress progress-u progress-xxs">
-        <div style="width: #{percent}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="#{percent}" role="progressbar" class="progress-bar progress-bar-#{color}">
-        </div>
-      </div>
-    }
-  end
+  # # 显示main 统计的标题
+  # def show_header(title, icon='fa-bar-chart-o')
+  #   %Q{
+  #     <div class="panel-heading-v2 overflow-h">
+  #       <h3 class="heading-xs pull-left"><i class="fa #{icon}"></i> #{title}</h3>
+  #     </div>
+  #     <hr/>
+  #   }
+  # end
 
-  # 后台main 统计粮机、办公、汽车的采购量
-  def show_category_total(name, total)
-    sum = total.present? ? total : 0
-    %Q{
-      <div class="row margin-bottom-10 margin-left-5">
-        <div class="col-xs-5 service-in">#{name}</div>
-        <div class="col-xs-7 text-right service-in">#{sum}</div>
-      </div>
-    }
-  end
+  # # 后台main 统计采购方式占比
+  # def progress_bar(name, num, color='u', title=name)
+  #   percent = num == 0 ? 0 : format("%0.2f", num)
+  #   %Q{
+  #     <h3 class="heading-xs" title="#{title}">#{name} <span class="pull-right">#{percent}%</span></h3>
+  #     <div class="progress progress-u progress-xxs">
+  #       <div style="width: #{percent}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="#{percent}" role="progressbar" class="progress-bar progress-bar-#{color}">
+  #       </div>
+  #     </div>
+  #   }
+  # end
 
-  # 格式化显示金额 万元
-  def format_total(total)
-    sum = total.present? ? total : 0
-    "¥#{format("%0.2f", sum/10000)} 万元"
-  end
+  # # 后台main 统计粮机、办公、汽车的采购量
+  # def show_category_total(name, total)
+  #   sum = total.present? ? total : 0
+  #   %Q{
+  #     <div class="row margin-bottom-10 margin-left-5">
+  #       <div class="col-xs-5 service-in">#{name}</div>
+  #       <div class="col-xs-7 text-right service-in">#{sum}</div>
+  #     </div>
+  #   }
+  # end
 
-  # 在树中显示日预算开通状态图标
-  def show_rys_icon
-    url = "/plugins/icons/"
-    icon = if self.rys_switch
-      self.rys_code.present? ? "open_1" : "open_0"
-    else
-      self.rys_code.present? ? "close_1" : "close_0"
-    end
-    "#{url}#{icon}.png"
-  end
+  # # 格式化显示金额 万元
+  # def format_total(total)
+  #   sum = total.present? ? total : 0
+  #   "¥#{format("%0.2f", sum/10000)} 万元"
+  # end
+
+  # # 在树中显示日预算开通状态图标
+  # def show_rys_icon
+  #   url = "/plugins/icons/"
+  #   icon = if self.rys_switch
+  #     self.rys_code.present? ? "open_1" : "open_0"
+  #   else
+  #     self.rys_code.present? ? "close_1" : "close_0"
+  #   end
+  #   "#{url}#{icon}.png"
+  # end
 
 end

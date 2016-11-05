@@ -8,8 +8,8 @@
     remote:        data-remote
 -%>
 <li class="page<%= ' active' if page.current? %>">
-	<% url = url.split("?").first -%>
-	<% 
+	<%# url = url.split("?").first -%>
+	<%#
 		combos = params[:combo].split("_")
     combos[Product::QS.index("page")] = page
     combos.each_with_index{|o, i| combos[i] = 0 if o.nil?}

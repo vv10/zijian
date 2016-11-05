@@ -37,7 +37,7 @@ class UsersController < JamesController
     dep = Department.create(name: params[:user][:dep], parent_id: Dictionary.dep_supplier_id, dep_type: false)
     user = User.create(params.require(:user).permit(:login, :email, :password, :password_confirmation))
     if dep.present? && user.present?
-      user.update(department_id: dep.id, is_admin: true, is_personal: false)
+      user.update(department_id: dep.id)
       sign_in_user user
       write_logs(dep,"注册",'账号创建成功')
       write_logs(user,"注册",'账号创建成功')
@@ -100,13 +100,13 @@ class UsersController < JamesController
       if user && user.authenticate(user_params[:password])
         sign_in_user(user, user_params[:remember_me] == '1')
         session.delete(:wrong_pwd)
-        if user.department.get_tips.blank?
+        # if user.department.get_tips.blank?
           # tips_get '登录成功！'
           redirect_to main_path
-        else
-          flash_get user.department.get_tips
-          redirect_to kobe_departments_path
-        end
+        # else
+        #   flash_get user.department.get_tips
+        #   redirect_to kobe_departments_path
+        # end
       else
         session[:wrong_pwd] = true
         flash_get '用户名或者密码错误!'

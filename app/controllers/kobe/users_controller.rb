@@ -35,7 +35,7 @@ class Kobe::UsersController < KobeController
 
   def update
     if update_and_write_logs(@user, User.xml(@user, current_user))
-      redirect_to kobe_users_path
+      redirect_to current_user.is_boss? ? kobe_departments_path(@user.department_id) : kobe_users_path
     else
       redirect_back_or
     end
@@ -88,6 +88,7 @@ class Kobe::UsersController < KobeController
 
     def get_user
       @user = current_user
+      @user = User.find_by(id: params[:id]) if current_user.is_boss? && params[:id].present?
       cannot_do_tips unless @user.present? && @user.cando(action_name, current_user)
     end
 
