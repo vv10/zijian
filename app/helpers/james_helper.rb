@@ -8,7 +8,7 @@ module JamesHelper
       if v == "active"
         str << "<li class='active'>#{k}</li>"
       else
-        str << "<li> #{link_to k, v}</li>"
+        str << "<li>#{link_to k, v}</li>"
       end
     end
     str.html_safe
