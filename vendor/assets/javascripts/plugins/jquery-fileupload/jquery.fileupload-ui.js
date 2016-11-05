@@ -361,6 +361,9 @@
             if (data.result && $.isArray(data.result)) {
                 return data.result;
             }
+            if (data.result && $.isArray(data.result.files)) {
+                return data.result.files;
+            }
             return [];
         },
 
