@@ -1,4 +1,4 @@
-<%= render partial: "header", locals: { breadcrumbs_left: @product.title, breadcrumbs_right: breadcrumbs_li("首页" => root_path, @product.category.name => channel_path(@product.category.id), @product.ptype => "active") } %>
+<%= render partial: "header", locals: { breadcrumbs_left: @product.title, breadcrumbs_right: breadcrumbs_li("首页" => root_path, @product.category.name => channel_path(@product.category.id), @product.menu => "active") } %>
 
 <div class="container">
   <div class="content">

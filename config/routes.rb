@@ -19,6 +19,7 @@ Evbdup::Application.routes.draw do
   get "search", :to => 'home#search', :as => "search"
   get 'channel/(:combo)' => "home#channel", :as => :channel
   get 'details/(:pid)' => "home#details", as: :details
+  get 'hesay' => "home#hesay", as: :hesay
 
   get 'sign_in', :to => 'users#sign_in'
   get 'sign_up', :to => 'users#sign_up'
