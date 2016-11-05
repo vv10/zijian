@@ -1464,7 +1464,7 @@
 .call-action-v2 {
   padding: 50px 0;
   text-align: center;
-  background: url(../img/patterns/16.png);
+  background: url(/plugins/images/patterns/16.png);
 }
 
 .call-action-v2 h2 {
@@ -1894,7 +1894,7 @@
   height: 100%; 
   content: " ";
   position: absolute;
-  background: url(../img/patterns/gridtile.png) repeat;
+  background: url(/plugins/images/patterns/gridtile.png) repeat;
 }
 
 /*Parallax Quote Inner*/
@@ -2017,14 +2017,14 @@
 /*Parallax Counter
 ------------------------------------*/
 .parallax-bg {
-  background: url(../img/patterns/5.png) repeat fixed;
+  background: url(/plugins/images/patterns/5.png) repeat fixed;
 }
 
 /*Parallax Counter
 ------------------------------------*/
 .parallax-counter {
   padding: 30px 0;
-  background: url(../img/patterns/5.png) repeat fixed;
+  background: url(/plugins/images/patterns/5.png) repeat fixed;
 }
 
 .parallax-counter .counters {
@@ -2046,7 +2046,7 @@
 ------------------------------------*/
 .parallax-counter-v1 {
   padding: 60px 0;
-  background: url(../img/patterns/5.png) repeat fixed;
+  background: url(/plugins/images/patterns/5.png) repeat fixed;
 }
 
 .parallax-counter-v1 .counters {
@@ -2071,7 +2071,7 @@
 .parallax-counter-v2 {
   position: relative;
   padding: 80px 0 60px;
-  background: url(../img/patterns/16.png) repeat fixed;
+  background: url(/plugins/images/patterns/16.png) repeat fixed;
 }
 
 .parallax-counter-v2:after {
@@ -2255,7 +2255,7 @@
 ------------------------------------*/
 .flat-bg-block-v1 {
   padding: 40px 0;
-  background: url(../img/patterns/16.png) repeat;
+  background: url(/plugins/images/patterns/16.png) repeat;
 }
 
 .flat-bg-block-v1 .checked-list.first-child {
@@ -2675,7 +2675,7 @@
 .quote-v1 {
   padding: 60px 0;
   text-align: center;
-  background: url(../img/patterns/5.png) repeat;
+  background: url(/plugins/images/patterns/5.png) repeat;
 }
 
 .quote-v1 p {

@@ -28,7 +28,9 @@ class HomeController < JamesController
   end
 
   def hesay
+  end
 
+  def pdf
   end
 
 end

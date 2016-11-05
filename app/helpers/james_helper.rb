@@ -74,6 +74,10 @@ module JamesHelper
         cls = { class: 'active' } if a == params[:menu] || (params[:menu].blank? && a == "全部")
         tmp << content_tag(:li, link_to(a, channel_path(ha)), (cls ||= {}))
       end
+      # PDF成套作品下载
+      if category.name == "书道黑白"
+        tmp << content_tag(:li, link_to("套件", pdf_path))
+      end
       %Q{
         <div class="container">
           <ul class="menu_ul">

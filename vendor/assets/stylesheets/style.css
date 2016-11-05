@@ -67,7 +67,7 @@ a:hover {
   box-shadow: 0 0 5px #ccc;
   margin-left: auto !important;
   margin-right: auto !important;
-  background: url(../img/patterns/15.png) repeat;
+  background: url(/plugins/images/patterns/15.png) repeat;
 }
 
 /*Main Styles
@@ -1557,7 +1557,7 @@ img.img-mouse {
 .service-info {
 	position: relative;
 	padding: 40px 0 50px;
-	background: url(../img/patterns/17.png) repeat;
+	background: url(/plugins/images/patterns/17.png) repeat;
 }
 
 .service-info .info-description {
