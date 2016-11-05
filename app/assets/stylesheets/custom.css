@@ -129,3 +129,19 @@
   -khtml-opacity: 0.8;
   opacity: 0.8;
 }
+.tc { text-align: center; }
+.menu_ul {
+  text-align: center;
+  margin: 40px 0;
+}
+.menu_ul li {
+  display: inline;
+  list-style: none;
+  position: relative;
+  padding: 0 10px;
+  color: #7c8082;
+  font-size: 16px;
+}
+.menu_ul li.active a {
+  color: #a10f2b;
+}

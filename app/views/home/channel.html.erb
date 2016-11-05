@@ -1,4 +1,6 @@
 <%= render partial: "header", locals: { breadcrumbs_left: @category.try(:name), breadcrumbs_right: breadcrumbs_li("返回首页" => root_path) } %>
 
+<%= show_menu(@category) %>
+
 <%= render partial: "result", locals: { rs: @products } %>
 

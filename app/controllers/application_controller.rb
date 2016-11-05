@@ -15,20 +15,20 @@ class ApplicationController < ActionController::Base
 
   before_action :init_params_search
 
-  def default_url_options(options = nil)
-    {:format => "html"}
-  end
+  # def default_url_options(options = nil)
+  #   {:format => "html"}
+  # end
 
   # cancan 权限校验
-  rescue_from CanCan::AccessDenied do |exception|
-    flash_get(exception.message)
-    respond_to do |format|
-      format.json { render text: exception.message }
-      format.html { redirect_to current_user.present? ? main_path : root_path}
-    end
-    # redirect_to errors_path, :alert => exception.message
-    # render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
-  end
+  # rescue_from CanCan::AccessDenied do |exception|
+  #   flash_get(exception.message)
+  #   respond_to do |format|
+  #     format.json { render text: exception.message }
+  #     format.html { redirect_to current_user.present? ? main_path : root_path}
+  #   end
+  #   # redirect_to errors_path, :alert => exception.message
+  #   # render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
+  # end
 
   # 当前用户
   def current_user

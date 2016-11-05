@@ -19,7 +19,7 @@ module JamesHelper
     if product.category.present?
       xml = product.category.params_xml
       str = ""
-      Nokogiri::XML(xml).xpath("/root/node[not(@data_type='textarea')]").each do |node|
+      Nokogiri::XML(xml).xpath("/root/node[not(@data_type='textarea')][not(@column='menu')]").each do |node|
         next unless node.attributes.has_key? "column"
         str << "<li><strong>#{node.attributes["name"].to_str}:</strong> #{eval("product.#{node.attributes["column"].to_str}")}</li>"
       end
@@ -59,6 +59,29 @@ module JamesHelper
         #{tmp if cdt}
       </div>
     }.html_safe
+  end
+
+  # 显示栏目
+  def show_menu(category)
+    node = Nokogiri::XML(category.params_xml).at_css("node[@column='menu']")
+    if node.present?
+      arr = eval(node.attributes["data"].to_str)
+      arr.unshift("全部")
+      tmp = []
+      arr.each do |a|
+        ha = { combo: category.id }
+        ha[:menu] = a unless a == "全部"
+        cls = { class: 'active' } if a == params[:menu] || (params[:menu].blank? && a == "全部")
+        tmp << content_tag(:li, link_to(a, channel_path(ha)), (cls ||= {}))
+      end
+      %Q{
+        <div class="container">
+          <ul class="menu_ul">
+          #{tmp.join("<li> | </li>")}
+          </ul>
+        </div>
+      }.html_safe
+    end
   end
 
 end
