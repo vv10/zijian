@@ -69,12 +69,15 @@ module BtnArrayHelper
     arr << [obj.class.icon_action("详细"), kobe_product_path(obj), target: "_blank"]  if obj.cando("show", current_user)
     # 修改
     arr << [obj.class.icon_action("修改"), edit_kobe_product_path(obj)] if obj.cando("edit", current_user)
-    # 冻结
-    arr << [obj.class.icon_action("下架"), "#opt_dialog", "data-toggle" => "modal", onClick: %Q{ modal_dialog_show("#{obj.class.icon_action('下架')}",'#{freeze_kobe_product_path(obj)}', "#opt_dialog") }] if obj.cando("freeze", current_user)
-    # 恢复
-    arr << [obj.class.icon_action("恢复"), "#opt_dialog", "data-toggle" => "modal", onClick: %Q{ modal_dialog_show("#{obj.class.icon_action('恢复')}",'#{recover_kobe_product_path(obj)}', "#opt_dialog") }] if obj.cando("recover", current_user)
+    # 下架
+    arr << [obj.class.icon_action("下架"), "#{update_freeze_kobe_product_path(obj)}", method: "post", data: { confirm: "下架的作品在前台不显示，确定下架吗?" }] if obj.cando("update_freeze", current_user)
+    # arr << [obj.class.icon_action("下架"), "#opt_dialog", "data-toggle" => "modal", onClick: %Q{ modal_dialog_show("#{obj.class.icon_action('下架')}",'#{freeze_kobe_product_path(obj)}', "#opt_dialog") }] if obj.cando("freeze", current_user)
+    # 上架
+    arr << [obj.class.icon_action("上架"), "#{update_recover_kobe_product_path(obj)}", method: "post", data: { confirm: "上架的作品将在前台显示，确定上架吗?" }] if obj.cando("update_recover", current_user)
+    # arr << [obj.class.icon_action("恢复"), "#opt_dialog", "data-toggle" => "modal", onClick: %Q{ modal_dialog_show("#{obj.class.icon_action('恢复')}",'#{recover_kobe_product_path(obj)}', "#opt_dialog") }] if obj.cando("recover", current_user)
     # 删除
-    arr << [obj.class.icon_action("删除"), "#opt_dialog", "data-toggle" => "modal", onClick: %Q{ modal_dialog_show("#{obj.class.icon_action('删除')}",'#{delete_kobe_product_path(obj)}', "#opt_dialog") }] if obj.cando("delete", current_user)
+    arr << [obj.class.icon_action("删除"), "#{kobe_product_path(obj)}", method: "delete", data: { confirm: "删除后不可恢复，确定删除吗?" }] if obj.cando("destroy", current_user)
+    # arr << [obj.class.icon_action("删除"), "#opt_dialog", "data-toggle" => "modal", onClick: %Q{ modal_dialog_show("#{obj.class.icon_action('删除')}",'#{delete_kobe_product_path(obj)}', "#opt_dialog") }] if obj.cando("delete", current_user)
     return arr
   end
 

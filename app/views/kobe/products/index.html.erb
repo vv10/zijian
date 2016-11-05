@@ -9,6 +9,7 @@
             </div>
             <div class="col-md-4 pull-right">
                 <%= search_form_for @q, url: kobe_products_path, html: { method: :get } do |f| %>
+                <%= hidden_field_tag :ca_id, params[:ca_id] %>
                 <div class="margin-bottom-10">
                   <div class="input-group">
                       <%= f.search_field :pcode_or_title_cont, class: "form-control", placeholder: "请输入作品名称或者编号..." %>

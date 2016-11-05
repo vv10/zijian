@@ -41,34 +41,34 @@ class Kobe::ProductsController < KobeController
 
 
   # 删除
-  def delete
-    render partial: '/shared/dialog/opt_liyou', locals: { form_id: 'delete_product_form', action: kobe_product_path(@product), method: 'delete' }
-  end
+  # def delete
+  #   render partial: '/shared/dialog/opt_liyou', locals: { form_id: 'delete_product_form', action: kobe_product_path(@product), method: 'delete' }
+  # end
 
   def destroy
-    @product.change_status_and_write_logs("删除", stateless_logs("删除",params[:opt_liyou],false))
+    @product.change_status_and_write_logs("删除", stateless_logs("删除", "", false))
     tips_get("删除成功。")
     redirect_back_or request.referer
   end
 
   # 下架
-  def freeze
-    render partial: '/shared/dialog/opt_liyou', locals: {form_id: 'freeze_product_form', action: update_freeze_kobe_product_path(@product)}
-  end
+  # def freeze
+  #   render partial: '/shared/dialog/opt_liyou', locals: {form_id: 'freeze_product_form', action: update_freeze_kobe_product_path(@product)}
+  # end
 
   def update_freeze
-    @product.change_status_and_write_logs("下架",stateless_logs("下架", params[:opt_liyou], false))
+    @product.change_status_and_write_logs("下架",stateless_logs("下架",  "", false))
     tips_get("下架成功。")
     redirect_back_or request.referer
   end
 
   # 恢复
-  def recover
-    render partial: '/shared/dialog/opt_liyou', locals: { form_id: 'recover_product_form', action: update_recover_kobe_product_path(@product) }
-  end
+  # def recover
+  #   render partial: '/shared/dialog/opt_liyou', locals: { form_id: 'recover_product_form', action: update_recover_kobe_product_path(@product) }
+  # end
 
   def update_recover
-    @product.change_status_and_write_logs("恢复", stateless_logs("恢复",params[:opt_liyou],false))
+    @product.change_status_and_write_logs("恢复", stateless_logs("恢复", "", false))
     tips_get("恢复成功。")
     redirect_back_or request.referer
   end
