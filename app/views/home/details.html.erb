@@ -2,30 +2,56 @@
 
 <div class="container">
   <div class="content">
-    <!-- Magazine Slider -->
-    <div class="carousel slide carousel-v2 margin-bottom-40" id="portfolio-carousel">
+    <% if @product.menu == "对联" %>
 
-      <div class="carousel-inner">
-        <div class="item active">
-          <%= image_tag @product.picture.upload.url(:lg), class: "full-width img-responsive" %>
-        </div>
-      </div>
-
-    </div>
-    <!-- End Magazine Slider -->
 
     <div class="row margin-bottom-60">
-      <div class="col-sm-8">
-        <div class="headline"><h2>作品描述</h2></div>
-        <p><%= @product.summary %></p>
+      <div class="col-sm-6">
+        <div class="carousel slide carousel-v2 margin-bottom-40" id="portfolio-carousel">
+          <div class="carousel-inner">
+            <div class="item active">
+              <%= image_tag @product.picture.upload.url(:lg), class: "full-width img-responsive" %>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <div class="headline"><h2>基本参数</h2></div>
         <ul class="list-unstyled project-details">
           <%= get_details_params(@product) %>
         </ul>
+        <div class="headline mt-20"><h2>作品描述</h2></div>
+        <p><%= @product.summary %></p>
       </div>
     </div>
+
+
+    <% else %>
+      <!-- Magazine Slider -->
+      <div class="carousel slide carousel-v2 margin-bottom-40" id="portfolio-carousel">
+
+        <div class="carousel-inner">
+          <div class="item active">
+            <%= image_tag @product.picture.upload.url(:lg), class: "full-width img-responsive" %>
+          </div>
+        </div>
+
+      </div>
+      <!-- End Magazine Slider -->
+
+      <div class="row margin-bottom-60">
+        <div class="col-sm-8">
+          <div class="headline"><h2>作品描述</h2></div>
+          <p><%= @product.summary %></p>
+        </div>
+        <div class="col-sm-4">
+          <div class="headline"><h2>基本参数</h2></div>
+          <ul class="list-unstyled project-details">
+            <%= get_details_params(@product) %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
 
     <% if @ps.present? %>
     <div class="cube-portfolio">

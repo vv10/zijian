@@ -41,6 +41,8 @@
 
 <%= javascript_include_tag "channel" %>
 
+<%= javascript_include_tag "plugins/cube-portfolio/cube-portfolio-#{params[:menu] == "对联" ? 8 : 4}" %>
+
 <!--[if lt IE 9]>
     <%= javascript_include_tag "ie_9" %>
 <![endif]-->
