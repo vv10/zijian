@@ -15,7 +15,7 @@ class Kobe::ProductsController < KobeController
   def new
     @product = Product.new
     @product.pcode = @category.code + create_random_chars(6)
-    @myform = SingleForm.new(@category.params_xml, @product, { form_id: "product_form", upload_files: true, min_number_of_files: 1, action: kobe_products_path(ca_id: @category.id), title: "<i class='fa fa-pencil-square-o'></i> 发布作品", grid: 2 })
+    @myform = SingleForm.new(@category.params_xml, @product, { form_id: "product_form", upload_files: true, min_number_of_files: 1, action: kobe_products_path(ca_id: @category.id), title: "<i class='fa fa-pencil-square-o'></i> 发布作品 - #{@category.name}", grid: 2 })
   end
 
   def create

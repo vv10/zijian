@@ -171,8 +171,7 @@ module AboutStatus
     # 如果是订单表 并且已经填写发票号 提交和审核通过的状态变成93
     # tmp = self.class == Order && self.invoice_number.present? && Dictionary.yw_type.include?(self.rule.try(:yw_type))
     ha = {
-      "删除" => { 65 => 404 },
-
+      "删除" => { 65 => 404, 26 => 404 },
       "下架" => { 65 => 26 },
       "冻结" => { 65 => 12 },
       "停止" => { 65 => 54 },
