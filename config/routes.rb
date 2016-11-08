@@ -28,6 +28,7 @@ Evbdup::Application.routes.draw do
   # 后台
   get 'products/(:ca_id)' => "kobe/products#index", as: :products
   get 'new/(:ca_id)' => "kobe/products#new", as: :new
+  get 'batch_new/(:ca_id)' => "kobe/products#batch_new", as: :batch_new
 
   resources :uploads, :only => [:index, :create, :destroy]
 
@@ -87,6 +88,9 @@ namespace :kobe do
       member do
         get :freeze, :delete, :recover
         post :update_freeze, :update_recover
+      end
+      collection do
+        post :batch_create
       end
     end
   end

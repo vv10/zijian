@@ -5,7 +5,8 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-8 pull-left padding-top-5">
-                <%= link_to('<i class="fa fa-plus"></i> 新增'.html_safe, new_path(params[:ca_id])) %>
+                <%= link_to('<i class="fa fa-plus"></i> 新增'.html_safe, new_path(params[:ca_id])) %> &nbsp;&nbsp;&nbsp;&nbsp;
+                <%= link_to('<i class="fa fa-plus"></i> 批量新增'.html_safe, batch_new_path(params[:ca_id])) %>
             </div>
             <div class="col-md-4 pull-right">
                 <%= search_form_for @q, url: kobe_products_path, html: { method: :get } do |f| %>

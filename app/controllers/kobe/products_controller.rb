@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class Kobe::ProductsController < KobeController
 
-  before_action :get_category, :only => [:new, :create]
+  before_action :get_category, :only => [:new, :create, :batch_new, :batch_create]
   before_action :get_product, :except => [:index, :new, :create]
 
   # 我的入围作品
@@ -10,7 +10,6 @@ class Kobe::ProductsController < KobeController
     @q = Product.where(get_conditions("products", [["category_id = ?", params[:ca_id]]])).ransack(params[:q])
     @products = @q.result.page params[:page]
   end
-
 
   def new
     @product = Product.new
@@ -39,6 +38,28 @@ class Kobe::ProductsController < KobeController
     @arr << { title: "历史记录", icon: "fa-clock-o", content: show_logs(@product) }
   end
 
+
+  # 批量上传
+  def batch_new
+    @product = Product.new
+    @myform = SingleForm.new(@category.params_xml, @product, { form_id: "product_form", upload_files: true, min_number_of_files: 1, action: batch_create_kobe_products_path(ca_id: @category.id), title: "<i class='fa fa-pencil-square-o'></i> 批量上传 - #{@category.name}", grid: 2 })
+  end
+
+  # 批量创建
+  def batch_create
+    unless params["uploaded_file_ids"].blank?
+      attribute = prepare_params_for_save(Product, @category.params_xml, { category_id: @category.id, title: "未命名", user_id: current_user.id, department_id: current_user.department_id })
+      uploads = ProductsUpload.where(master_id: 0, id: params["uploaded_file_ids"].split(","))
+      uploads.each do |upload|
+        product = Product.create(attribute)
+        product.category_id = @category.id
+        product.pcode = @category.code + create_random_chars(6)
+        product.uploads << upload
+        product.save
+      end
+    end
+    redirect_to products_path(@category.id)
+  end
 
   # 删除
   # def delete

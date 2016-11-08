@@ -5,7 +5,7 @@ master_id = myform.obj.id
 min_number_of_files = myform.options[:min_number_of_files]
 rules = myform.rules
 messages = myform.messages
-jquery_setting = myform.options[:upload_files_name].present? ? upload_model.send("#{myform.options[:upload_files_name]}_jquery_setting") : upload_model.jquery_setting
+jquery_setting = myform.options[:upload_files_name].present? ? upload_model.send("#{myform.options[:upload_files_name]}_jquery_setting") : upload_model.jquery_setting(action_name)
 %>
 <div class="headline"><h2><strong><i class="fa fa-paperclip"></i> 上传附件</strong></h2></div>
 <%= form_tag(uploads_path(master_id: master_id, upload_model: upload_model, upload_master_model: myform.options[:upload_master_model]), multipart: true, id: "#{form_id}_fileupload", class: "sky-form fileupload_form no-border" ) %>
