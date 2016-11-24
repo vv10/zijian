@@ -2,7 +2,9 @@
   <div id="grid-container" class="cbp-l-grid-agency">
 
     <% rs.each do |product| %>
+      <% cache product do %>
       <%= show_product(product) %>
+      <% end %>
     <% end %>
   </div>
 </div>
