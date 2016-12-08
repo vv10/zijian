@@ -40,7 +40,7 @@
                 <% @products.each_with_index do |product,index| %>
                 <tr>
                     <td><%= show_index(index) %></td>
-                    <td class="tc"><%= show_picture(product.picture.upload.url(:thumbnail), product.picture.upload.url(:lg)) %></td>
+                    <td class="tc"><%= product.picture.present? ? show_picture(product.picture.upload.url(:thumbnail), product.picture.upload.url(:lg)) : ""%></td>
                     <td><%= product.pcode %></td>
                     <td><%= product.title %></td>
                     <td><%= product.menu %></td>
