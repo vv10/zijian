@@ -18,8 +18,8 @@ gem 'rqrcode'
 # 数据交互Post提交
 gem 'rest_client', '1.8.2'
 
-gem 'sunspot_rails', github: "betam4x/sunspot" #, '2.1.1'
-gem 'sunspot_solr', github: "betam4x/sunspot" #, '2.1.1'
+gem 'sunspot_rails', '2.1.1'#, github: "betam4x/sunspot" #, '2.1.1'
+gem 'sunspot_solr', '2.1.1'#, github: "betam4x/sunspot" #, '2.1.1'
 
 group :assets do
 	# Use SCSS for stylesheets
@@ -46,7 +46,7 @@ gem 'migration_comments', '0.3.2'
 gem 'jquery-rails', '3.0.4'
 
 # 类xml解析
-gem "nokogiri", "~> 1.6.1"
+gem "nokogiri"
 
 if RUBY_PLATFORM =~ /mingw32/
 	gem 'tzinfo-data'
