@@ -41,7 +41,7 @@ module JamesHelper
     }
     %Q{
       <div class="cbp-item">
-        <div class="cbp-caption margin-bottom-20">
+        <div class="cbp-caption margin-bottom-20 gray_border">
           <div class="cbp-caption-defaultWrap">
             #{image_tag product.picture.upload.url(:md)}
           </div>

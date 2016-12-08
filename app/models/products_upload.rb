@@ -23,7 +23,7 @@ class ProductsUpload < ActiveRecord::Base
       '{
         autoUpload: true,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        maxNumberOfFiles: 100,
+        maxNumberOfFiles: 200,
         maxFileSize: 10240000
       }'
     else

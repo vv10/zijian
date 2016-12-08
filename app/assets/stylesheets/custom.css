@@ -145,3 +145,5 @@
 .menu_ul li.active a {
   color: #a10f2b;
 }
+
+.gray_border{border: 8px solid #eee;}
