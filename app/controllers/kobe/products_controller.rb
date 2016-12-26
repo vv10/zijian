@@ -42,6 +42,8 @@ class Kobe::ProductsController < KobeController
   # 批量上传
   def batch_new
     @product = Product.new
+    @product.title = "未命名"
+    @product.pcode = "随机分配"
     @myform = SingleForm.new(@category.params_xml, @product, { form_id: "product_form", upload_files: true, min_number_of_files: 1, action: batch_create_kobe_products_path(ca_id: @category.id), title: "<i class='fa fa-pencil-square-o'></i> 批量上传 - #{@category.name}", grid: 2 })
   end
 
@@ -53,7 +55,7 @@ class Kobe::ProductsController < KobeController
       uploads.each do |upload|
         product = Product.create(attribute)
         product.category_id = @category.id
-        product.pcode = @category.code + create_random_chars(6)
+        product.pcode = @category.code + create_random_chars(6) if product.pcode == "随机分配"
         product.uploads << upload
         product.save
       end
