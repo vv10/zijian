@@ -6,7 +6,7 @@ defaults: &defaults
   web_site_domain: "http://www.zijianwenhua.com.cn"
   web_site_founded_year: 2016
   web_site_key_words: "子建文化 北京子建文化艺术有限公司 书画 书法 绘画"
-  web_site_description: "北京子建文化艺术有限公司官方网站，"
+  web_site_description: "北京子建文化艺术有限公司官方网站"
   web_site_author: "小俩工作室"
   company_name: "小俩工作室"
   company_short_name: "小俩工作室"
