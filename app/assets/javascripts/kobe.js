@@ -3,12 +3,16 @@
 //= require plugins/counter/waypoints.min
 //= require plugins/counter/jquery.counterup.min
 //= require plugins/jquery.mCustomScrollbar.concat.min
+//= require plugins/jquery.lazyload.min.js
 
 
 
 $(function() {
   App.initCounter();
   FancyBox.initFancybox(); // 初始化 图片展示
+
+  // 图片懒加载
+  $("img.lazy").lazyload();
 });
 
 // Ajax 正在加载中。。。

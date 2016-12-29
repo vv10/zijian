@@ -31,7 +31,7 @@ module JamesHelper
   def show_product(product)
     cdt = [1,2].include? product.category_id
     details = %Q{
-      <li>#{ link_to '<i class="rounded-x fa fa-link"></i>'.html_safe, details_path(product.id) }</li>
+      <li>#{ link_to('<i class="rounded-x fa fa-link"></i>'.html_safe, details_path(product.id), :target=> "_blank") }</li>
     }
     tmp = %Q{
       <div class="cbp-title-dark">
@@ -43,7 +43,7 @@ module JamesHelper
       <div class="cbp-item">
         <div class="cbp-caption margin-bottom-20 gray_border">
           <div class="cbp-caption-defaultWrap">
-            #{image_tag product.picture.upload.url(:md)}
+            #{image_tag(product.picture.upload.url(:md), class: "lazy")}
           </div>
           <div class="cbp-caption-activeWrap">
             <div class="cbp-l-caption-alignCenter">

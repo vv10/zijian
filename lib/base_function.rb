@@ -183,7 +183,7 @@ module BaseFunction
         <div class="thumbnail-img">
           <div class="overflow-hidden">
             <a href="#{large_pic_url}" title="#{title}" rel="#{rel}" class="fancybox">
-              <span><img alt="" src="#{small_pic_url}" class="img-responsive"></span>
+              <span><img class="lazy" src="#{small_pic_url}" class="img-responsive"></span>
             </a>
           </div>
         </div>
