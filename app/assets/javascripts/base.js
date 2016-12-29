@@ -5,14 +5,10 @@
 //= require plugins/smoothScroll
 //= require app
 //= require plugins/style-switcher
-//= require plugins/jquery.lazyload.min.js
 //
 
 jQuery(document).ready(function() {
   // 初始化
   App.init();
   StyleSwitcher.initStyleSwitcher();
-
-  // 图片懒加载
-  $("img.lazy").lazyload();
 });
