@@ -1,15 +1,15 @@
+<% cache do %>
+	<div class="container">
+		<ul class="channel grid effect-1" id="grid">
+			<% rs.each do |product| %>
+				<li class="service-block service-block-default p-10">
+					<%= image_tag product.picture.upload.url(:lg)%>
+					<p><%= link_to("[#{product.pcode}] #{product.title}", details_path(product.id), :target=> "_blank") %></p>
+				</li>
 
-
-<div class="container">
-	<ul class="channel grid effect-1" id="grid">
-		<% rs.each do |product| %>
-			<li class="service-block service-block-default p-10">
-				<%= image_tag product.picture.upload.url(:lg)%>
-				<p><%= link_to("[#{product.pcode}] #{product.title}", details_path(product.id), :target=> "_blank") %></p>
-			</li>
-
-		<% end %>
-	</ul>
-</div>
+			<% end %>
+		</ul>
+	</div>
+<% end %>
 
 <%= paginate rs, :theme => 'channel' %>
