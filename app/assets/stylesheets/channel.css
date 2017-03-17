@@ -1,7 +1,10 @@
 /*
  *
  *= require base
+ *= require pubu
  *= require plugins/cube-portfolio/cubeportfolio.min
  *= require plugins/cube-portfolio/custom-cubeportfolio
+ *
+ *=require plugins/viewer.min
  *
  */

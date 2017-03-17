@@ -1,12 +1,15 @@
-<div class="cube-portfolio container mt-40 mb-40">
-  <div id="grid-container" class="cbp-l-grid-agency">
 
-    <% rs.each do |product| %>
-      <% cache product do %>
-        <%= show_product(product) %>
-      <% end %>
-    <% end %>
-  </div>
+
+<div class="container">
+	<ul class="channel grid effect-1" id="grid">
+		<% rs.each do |product| %>
+			<li class="service-block service-block-default p-10">
+				<%= image_tag product.picture.upload.url(:lg)%>
+				<p><%= link_to("[#{product.pcode}] #{product.title}", details_path(product.id), :target=> "_blank") %></p>
+			</li>
+
+		<% end %>
+	</ul>
 </div>
 
 <%= paginate rs, :theme => 'channel' %>

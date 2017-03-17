@@ -20,3 +20,6 @@
  *= require_self
  *
  */
+
+.channel p{padding-top:10px;margin-bottom:0;}
+.channel img{display:block; margin:auto;cursor:pointer;}
