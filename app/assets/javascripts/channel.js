@@ -8,6 +8,8 @@
 //= require pubu/AnimOnScroll
 
 //= require plugins/viewer.min
+//
+//= require plugins/jquery.lazyload.min
 
 $(function() {
 
