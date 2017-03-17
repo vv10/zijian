@@ -9,9 +9,11 @@
 
 //= require plugins/viewer.min
 //
-//= require plugins/jquery.lazyload.min
+// require plugins/jquery.lazyload.min
 
 $(function() {
+
+	// $("img.lazy").lazyload({effect: "fadeIn"});
 
 	new AnimOnScroll( document.getElementById( 'grid' ), {
 		minDuration : 0.4,
