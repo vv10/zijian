@@ -1,14 +1,14 @@
 	<div class="container">
-		<ul class="channel grid effect-1" id="grid">
+		<div id="masonry" class="channel container-fluid">
 			<% rs.each do |product| %>
 				<% cache product do %>
-					<li class="service-block service-block-default p-10">
+					<div class="service-block service-block-default p-10 box">
 						<%= image_tag product.picture.upload.url(:lg)%>
 						<p><%= link_to("[#{product.pcode}] #{product.title}", details_path(product.id), :target=> "_blank") %></p>
-					</li>
+					</div>
 				<% end %>
 			<% end %>
-		</ul>
+		</div>
 	</div>
 
 

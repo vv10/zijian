@@ -1,10 +1,22 @@
 /*
  *
  *= require base
- *= require pubu
  *= require plugins/cube-portfolio/cubeportfolio.min
  *= require plugins/cube-portfolio/custom-cubeportfolio
  *
  *=require plugins/viewer.min
  *
  */
+
+
+.container-fluid {
+  padding: 20px;
+  }
+.box {
+  margin-bottom: 20px;
+  float: left;
+  width: 246px;
+  }
+  .box img {
+  max-width: 100%
+}
