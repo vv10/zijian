@@ -53,15 +53,5 @@
       </div>
     <% end %>
 
-    <% if @ps.present? %>
-    <div class="cube-portfolio">
-      <div class="headline"><h2>相似作品</h2></div>
-        <div id="grid-container" class="cbp-l-grid-agency">
-          <% @ps.each do |p| %>
-          <%= show_product(p) %>
-          <% end %>
-        </div>
-    </div>
-    <% end %>
   </div>
 </div>

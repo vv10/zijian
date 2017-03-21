@@ -26,8 +26,8 @@ class HomeController < JamesController
     @product = Product.find_by id: params[:pid]
     redirect_to not_found_path if @product.blank?
     params[:menu] = @product.menu
-    l = @product.menu == "对联" ? 8 : 4
-    @ps = Product.where(category_id: @product.category_id, psize: @product.psize, menu: @product.menu, ptype: @product.ptype).where.not(id: @product.id).limit(l)
+    # l = @product.menu == "对联" ? 8 : 4
+    # @ps = Product.where(category_id: @product.category_id, psize: @product.psize, menu: @product.menu, ptype: @product.ptype).where.not(id: @product.id).limit(l)
   end
 
   def hesay
