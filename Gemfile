@@ -1,4 +1,3 @@
-# source 'http://ruby.taobao.org'
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -114,7 +113,9 @@ gem 'ransack', '1.5.1'
 gem 'rufus-scheduler', '3.0.9'
 gem 'whenever', :require => false
 
-
+# 缓存
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
 # Use unicorn as the app server
 # gem 'unicorn'
 

@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class HomeController < JamesController
+  caches_page :index
   layout 'james', except: [:index]
 
   def index
