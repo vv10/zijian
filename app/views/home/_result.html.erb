@@ -3,7 +3,7 @@
 			<% rs.each do |product| %>
 				<% cache product do %>
 					<div class="service-block service-block-default p-10 box">
-						<%= image_tag product.picture.upload.url(:lg)%>
+						<%= image_tag product.picture.upload.url(:md)%>
 						<p><%= link_to("[#{product.pcode}] #{product.title}", details_path(product.id), :target=> "_blank") %></p>
 					</div>
 				<% end %>
