@@ -10,7 +10,7 @@
 
 
 $(function() {
-	
+
     var $container = $('#masonry');
     $container.imagesLoaded(function() {
         $container.masonry({
@@ -23,5 +23,5 @@ $(function() {
 	// $("img.lazy").lazyload();
 
 	// 看大图
-	$('.channel').viewer();
+	$('.channel').viewer({url: 'data-original'});
 });
